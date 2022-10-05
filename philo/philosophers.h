@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 17:38:09 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/05 18:43:25 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <sys/time.h>
 
 # define VERY_LARGE_N 999999999999999999
+
+typedef unsigned long long int	t_ulli;
 
 typedef enum e_phil
 {

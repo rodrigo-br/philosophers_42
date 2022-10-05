@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 18:25:28 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/05 18:43:34 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static int	ft_is_all_digit(const char *s)
 	return (1);
 }
 
-static unsigned long long int	ft_atolli(const char *n)
+static t_ulli	ft_atolli(const char *n)
 {
-	unsigned long long int	result;
-	int						i;
+	t_ulli	result;
+	int		i;
 
 	result = 0;
 	i = 0;
