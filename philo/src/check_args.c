@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 18:01:56 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/05 18:11:24 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static int	is_all_num(char **argv)
 	int	i;
 
 	i = 0;
+	if (!ft_atolli(argv[0]))
+		return (0);
 	while (argv[i])
 	{
 		if (!ft_is_all_digit(argv[i]) || ft_strlen(argv[i]) > 20
