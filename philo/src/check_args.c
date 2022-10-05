@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 18:11:24 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/05 18:25:28 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ static int	ft_is_all_digit(const char *s)
 	int	i;
 
 	i = 0;
-	while (s[i])
-	{
-		if (!(s[i] <= '9' && s[i] >= '0'))
-			return (0);
+	while (s[i] && (s[i] <= '9' && s[i] >= '0'))
 		i++;
-	}
+	if (s[i])
+		return (0);
 	return (1);
 }
 
@@ -46,10 +44,7 @@ static unsigned long long int	ft_atolli(const char *n)
 	if (!ft_is_all_digit(n))
 		return (0);
 	while (n[i] <= '9' && n[i] >= '0')
-	{
-		result = result * 10 + (n[i] - '0');
-		i++;
-	}
+		result = result * 10 + (n[i++] - '0');
 	return (result);
 }
 
@@ -58,8 +53,6 @@ static int	is_all_num(char **argv)
 	int	i;
 
 	i = 0;
-	if (!ft_atolli(argv[0]))
-		return (0);
 	while (argv[i])
 	{
 		if (!ft_is_all_digit(argv[i]) || ft_strlen(argv[i]) > 20
@@ -72,10 +65,9 @@ static int	is_all_num(char **argv)
 
 int	check_args(int argc, char **argv)
 {
-	if ((argc != 5 && argc != 6) || !is_all_num(argv))
-	{
-		printf("incorrect args, check subject\n");
-		return (1);
-	}
+	if ((argc != 5 && argc != 6) || !is_all_num(argv) || !ft_atolli(argv[0]))
+		return (printf("incorrect args, check subject\n"));
+	if (argc == 6 && ft_atolli(argv[4]) == 0)
+		return (printf("n of times each philosopher must eat should be > 0\n"));
 	return (0);
 }
