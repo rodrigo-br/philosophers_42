@@ -1,38 +1,34 @@
 NAME	=	philo
-CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror -g3 -pthread# -fsanitize=thread
-
-SRC_DIR	=	src
+CFLAGS	=	-Wall -Wextra -Werror -g3
 OBJ_DIR	=	obj
-
-SRC		=	main.c 
-
+OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
+SRCS	=	$(MAIN) $(TESTE)
+MAIN	=	main.c 
+TESTE	=	teste.c
 HEADER	=	philosophers.h
-
-
-OBJ		=	${SRC:%.c=${OBJ_DIR}/%.o}
-
-VPATH	=	src
+VPATH	=	src src/teste
 INCLUDE	=	-I ./
 
+all: $(NAME)
 
-all: ${NAME}
+bonus: $(NAME_BONUS)
 
-${NAME}: ${OBJ_DIR} ${OBJ}
-	${CC} ${CFLAGS} ${OBJ} -o $@
-
-${OBJ_DIR}/%.o: %.c ${HEADER}
-	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
-
-${OBJ_DIR}:
-	mkdir -p $@
+run: $(NAME)
+	./$(NAME)
 
 clean:
-	rm -rf ${OBJ_DIR}
+	rm -rf obj
 
-fclean:	clean
-	rm -rf ${NAME}
+fclean: clean
+	rm -rf $(NAME)
 
-re:		fclean all
+re: fclean all
 
-.PHONY:	all clean fclean re run
+$(NAME): $(OBJ_DIR) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+$(OBJ_DIR)/%.o: %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
+
+$(OBJ_DIR):
+	mkdir -p $@
