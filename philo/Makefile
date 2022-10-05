@@ -16,9 +16,6 @@ all: $(NAME)
 
 bonus: $(NAME_BONUS)
 
-run: $(NAME)
-	./$(NAME)
-
 clean:
 	rm -rf obj
 
@@ -35,3 +32,5 @@ $(OBJ_DIR)/%.o: %.c $(HEADER)
 
 $(OBJ_DIR):
 	mkdir -p $@
+
+.PHONY:	all clean fclean re

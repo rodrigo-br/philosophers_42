@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 18:43:34 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/05 18:54:04 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ int	check_args(int argc, char **argv)
 	if ((argc != 5 && argc != 6) || !is_all_num(argv) || !ft_atolli(argv[0]))
 		return (printf("incorrect args, check subject\n"));
 	if (argc == 6 && ft_atolli(argv[4]) == 0)
-		return (printf("n of times each philosopher must eat should be > 0\n"));
+		return (printf("n of times each philo must eat should be > 0\n"));
 	return (0);
 }
