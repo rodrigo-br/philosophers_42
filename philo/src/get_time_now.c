@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_time_now.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 19:10:42 by ralves-b         ###   ########.fr       */
+/*   Created: 2022/10/05 19:07:22 by ralves-b          #+#    #+#             */
+/*   Updated: 2022/10/05 19:10:21 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-int	main(int argc, char **argv)
+long int	get_time_now(void)
 {
-	if (check_args(argc, argv + 1))
-		return (EXIT_FAILURE);
-	dprintf(2, "SUCCESS\n");
-	return (EXIT_SUCCESS);
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_usec);
 }

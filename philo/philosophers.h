@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 18:43:25 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/05 19:11:15 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef enum e_phil
 	SLEEP
 }	t_phil;
 
-int		check_args(int argc, char **argv);
-void	teste(char *teste);
+int			check_args(int argc, char **argv);
+long int	get_time_now(void);
+void		teste(char *teste);
 
 #endif
