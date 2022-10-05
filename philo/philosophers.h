@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 15:18:06 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/05 17:38:09 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define VERY_LARGE_N 999999999999999999
+
+typedef enum e_phil
+{
+	DEAD,
+	EAT,
+	THINK,
+	SLEEP
+}	t_phil;
+
+int		check_args(int argc, char **argv);
 void	teste(char *teste);
 
 #endif

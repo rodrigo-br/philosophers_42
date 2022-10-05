@@ -1,12 +1,15 @@
 NAME	=	philo
+
 CFLAGS	=	-Wall -Wextra -Werror -g3
 OBJ_DIR	=	obj
 OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
+
 SRCS	=	$(MAIN) $(TESTE)
-MAIN	=	main.c 
+MAIN	=	main.c check_args.c
 TESTE	=	teste.c
-HEADER	=	philosophers.h
+
 VPATH	=	src src/teste
+HEADER	=	philosophers.h
 INCLUDE	=	-I ./
 
 all: $(NAME)
