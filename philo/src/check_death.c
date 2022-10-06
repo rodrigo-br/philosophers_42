@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_death.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 08:26:33 by ralves-b         ###   ########.fr       */
+/*   Created: 2022/10/06 08:22:23 by ralves-b          #+#    #+#             */
+/*   Updated: 2022/10/06 08:29:28 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-int	main(int argc, char **argv)
+int	check_death(t_ulli strv, t_infos *infos)
 {
-	if (check_args(argc, ++argv))
-		return (EXIT_FAILURE);
-	create_philosopher(argv);
-	return (EXIT_SUCCESS);
+	if (get_time_now() - strv < infos->time_to_die / 1000)
+		return (0);
+	usleep(get_time_now() - strv);
+	printf("SOCRATES MORREU MENÓ\n");
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 21:13:55 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/06 07:56:35 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,13 @@ static int	is_all_num(char **argv)
 	return (1);
 }
 
+/* Resolvi multiplicar aqui por 1000 ao invés de no usleep porque aqui só
+multiplica uma vez, mas se deixar lá no usleep, vai ficar efetuando a
+operação várias vezes em loop */
 void	init_infos(char **argv, t_infos *info)
 {
-	info->n_of_philos = ft_atolli(argv[0]) * 1000;
+	info->n_of_philos = ft_atolli(argv[0]);
+	info->table.forks = TRUE;
 	info->time_to_die = ft_atolli(argv[1]) * 1000;
 	info->time_to_eat = ft_atolli(argv[2]) * 1000;
 	info->time_to_sleep = ft_atolli(argv[3]) * 1000;

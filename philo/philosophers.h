@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 20:55:56 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/06 08:23:43 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ typedef enum e_bool
 
 typedef unsigned long long int	t_ulli;
 
+typedef struct s_table
+{
+	t_bool	forks;
+}	t_table;
+
 typedef struct s_phil
 {
 	t_bool	dead;
@@ -46,10 +51,12 @@ typedef struct s_infos
 	t_ulli	time_to_sleep;
 	t_ulli	iterations;
 	t_bool	iterations_on;
+	t_table	table;
 }	t_infos;
 
 int			check_args(int argc, char **argv);
 void		init_infos(char **argv, t_infos *info);
+int			check_death(t_ulli strv, t_infos *infos);
 void		create_philosopher(char **argv);
 t_ulli		get_time_now(void);
 void		teste(char *teste);
