@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 15:56:39 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:46:06 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	init_infos(char **argv, t_infos *info)
 	info->n_of_philos = ft_atolli(argv[0]);
 	info->table.forks = malloc(sizeof(t_bool *) * info->n_of_philos);
 	while (++i < info->n_of_philos)
-		info->table.forks[i] = malloc(sizeof(t_bool) * 2);
+		info->table.forks[i] = malloc(sizeof(t_bool));
 	fork_values(&info);
 	info->time_to_die = ft_atolli(argv[1]) * 1000;
 	info->time_to_eat = ft_atolli(argv[2]) * 1000;
