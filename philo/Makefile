@@ -1,11 +1,11 @@
 NAME	=	philo
 
-CFLAGS	=	-Wall -Wextra -Werror -g3
+CFLAGS	=	-Wall -Wextra -Werror -g3 -pthread
 OBJ_DIR	=	obj
 OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 SRCS	=	$(MAIN) $(TESTE)
-MAIN	=	main.c check_args.c get_time_now.c
+MAIN	=	main.c check_args.c get_time_now.c create_philosopher.c
 TESTE	=	teste.c
 
 VPATH	=	src src/teste

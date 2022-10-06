@@ -6,21 +6,11 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/05 19:12:09 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/05 21:13:55 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
-
-static int	ft_strlen(const char *s)
-{
-	int	length;
-
-	length = 0;
-	while (s[length])
-		length++;
-	return (length);
-}
 
 static int	ft_is_all_digit(const char *s)
 {
@@ -51,25 +41,42 @@ static t_ulli	ft_atolli(const char *n)
 static int	is_all_num(char **argv)
 {
 	int	i;
+	int	length;
 
 	i = 0;
 	while (argv[i])
 	{
-		if (!ft_is_all_digit(argv[i]) || ft_strlen(argv[i]) > 20
-			|| (ft_strlen(argv[i]) == 20 && ft_atolli(argv[i]) <= VERY_LARGE_N))
+		length = 0;
+		while (argv[i][length])
+			length++;
+		if (!ft_is_all_digit(argv[i]) || length > 20
+			|| (length == 20 && ft_atolli(argv[i]) <= VERY_LARGE_N))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
+void	init_infos(char **argv, t_infos *info)
+{
+	info->n_of_philos = ft_atolli(argv[0]) * 1000;
+	info->time_to_die = ft_atolli(argv[1]) * 1000;
+	info->time_to_eat = ft_atolli(argv[2]) * 1000;
+	info->time_to_sleep = ft_atolli(argv[3]) * 1000;
+	if (argv[4])
+	{
+		info->iterations = ft_atolli(argv[4]) * 1000;
+		info->iterations_on = TRUE;
+	}
+	else
+		info->iterations_on = FALSE;
+}
+
 int	check_args(int argc, char **argv)
 {
-	printf("%ld\n", get_time_now());
 	if ((argc != 5 && argc != 6) || !is_all_num(argv) || !ft_atolli(argv[0]))
 		return (printf("incorrect args, check subject\n"));
 	if (argc == 6 && ft_atolli(argv[4]) == 0)
 		return (printf("n of times each philo must eat should be > 0\n"));
-	printf("%ld\n", get_time_now());
 	return (0);
 }
