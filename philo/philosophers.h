@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 08:23:43 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/06 11:09:46 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_infos
 
 int			check_args(int argc, char **argv);
 void		init_infos(char **argv, t_infos *info);
-int			check_death(t_ulli strv, t_infos *infos);
+int			check_death(t_ulli strv, t_infos *infos, t_ulli start, t_ulli activity);
 void		create_philosopher(char **argv);
 t_ulli		get_time_now(void);
 void		teste(char *teste);
