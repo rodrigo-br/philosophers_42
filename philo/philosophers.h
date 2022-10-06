@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 16:01:57 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/06 17:03:55 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_infos
 	t_ulli	time_to_sleep;
 	t_ulli	iterations;
 	t_bool	iterations_on;
-	t_table	table;
+	t_table	*table;
 }	t_infos;
 
 typedef struct s_phil
