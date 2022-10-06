@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 11:09:46 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:01:57 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <sys/time.h>
 
 # define VERY_LARGE_N 999999999999999999
+# define LEFT 0
+# define RIGHT 1
 
 typedef enum e_bool
 {
@@ -31,17 +33,8 @@ typedef unsigned long long int	t_ulli;
 
 typedef struct s_table
 {
-	t_bool	forks;
+	t_bool	**forks;
 }	t_table;
-
-typedef struct s_phil
-{
-	t_bool	dead;
-	t_bool	wait;
-	t_bool	eat;
-	t_bool	think;
-	t_bool	sleep;
-}	t_phil;
 
 typedef struct s_infos
 {
@@ -54,10 +47,21 @@ typedef struct s_infos
 	t_table	table;
 }	t_infos;
 
+typedef struct s_phil
+{
+	t_ulli	id;
+	t_bool	dead;
+	t_bool	eat;
+	t_bool	think;
+	t_bool	sleep;
+	t_infos	infos;
+}	t_phil;
+
 int			check_args(int argc, char **argv);
 void		init_infos(char **argv, t_infos *info);
 int			check_death(t_ulli strv, t_infos *infos, t_ulli start, t_ulli activity);
 void		create_philosopher(char **argv);
+void		fork_values(t_infos **info);
 t_ulli		get_time_now(void);
 void		teste(char *teste);
 

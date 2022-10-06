@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 11:15:19 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:30:23 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void	*live(void *_infos)
 		{
 			if (check_death(starving, infos, start, 0))
 				return (NULL);
-			if (infos->table.forks)
+			if (infos->table.forks[0][LEFT] && infos->table.forks[0][RIGHT])
 			{
-				infos->table.forks = FALSE;
+				infos->table.forks[0][LEFT] = FALSE;
+				infos->table.forks[0][RIGHT] = FALSE;
 				break ;
 			}
 		}
@@ -41,7 +42,8 @@ void	*live(void *_infos)
 		if (check_death(starving, infos, start, infos->time_to_eat / 1000))
 			return (NULL);
 		usleep(infos->time_to_eat);
-		infos->table.forks = TRUE;
+		infos->table.forks[0][LEFT] = TRUE;
+		infos->table.forks[0][RIGHT] = TRUE;
 		now = get_time_now() - start;
 		printf("%ld - SOCRATES TÁ DURMINU\n", now);
 		if (check_death(starving, infos, start, infos->time_to_sleep / 1000))
@@ -56,9 +58,21 @@ void	*live(void *_infos)
 void	create_philosopher(char **argv)
 {
 	t_infos		infos;
-	pthread_t	socrates;
+	pthread_t	*socrates;
+	t_ulli		i;
 
+	i = 0;
 	init_infos(argv, &infos);
-	pthread_create(&socrates, NULL, &live, &infos);
-	pthread_join(socrates, NULL);
+	socrates = malloc(sizeof(pthread_t) * infos.n_of_philos);
+	while (i < infos.n_of_philos)
+	{
+		pthread_create(&socrates[i], NULL, &live, &infos);
+		i++;
+	}
+	i = 0;
+	while (i < infos.n_of_philos)
+	{
+		pthread_join(socrates[i], NULL);
+		i++;
+	}
 }
