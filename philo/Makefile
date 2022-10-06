@@ -6,7 +6,7 @@ OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 SRCS	=	$(MAIN) $(TESTE)
 MAIN	=	main.c check_args.c get_time_now.c create_philosopher.c \
-			check_death.c fork_values.c
+			check_death.c forks.c
 TESTE	=	teste.c
 
 VPATH	=	src src/teste
