@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/07 16:40:22 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 17:19:28 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef unsigned long long int	t_ulli;
 
 typedef struct s_forks
 {
+	t_ulli			start;
 	pthread_mutex_t	*lock_forks;
 	pthread_mutex_t	lock_death;
 	pthread_mutex_t	lock_print;

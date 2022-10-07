@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/07 16:25:45 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 17:21:04 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,49 +26,37 @@ static t_ulli	ft_atolli(const char *n)
 
 void	*live(void *_infos)
 {
-	long int	start;
 	long int	now;
 	t_infos		*infos;
 
-	start = get_time_now();
 	infos = (t_infos *)_infos;
 	if (!(infos->id % 2))
 		usleep(10);
-	infos->starving = start;
+	infos->starving = forks()->start;
 	now = 0;
 	while (TRUE)
 	{
-		while (TRUE)
-		{
-			if (check_death(infos->starving, infos, start, 0))
-				return ((void *)&infos->id);
-			lock_forks(infos);
-			if (look_for_forks(infos))
-				break ;
-			unlock_forks(infos);
-			usleep(10);
-		}
-		unlock_forks(infos);
+		if (check_death(infos->starving, infos, forks()->start, 0))
+			return ((void *)&infos->id);
+		lock_forks(infos);
 		pthread_mutex_lock(&forks()->lock_print);
-		now = get_time_now() - start;
+		now = get_time_now() - forks()->start;
 		printf("%ld %lld is eating\n", now, infos->id);
 		pthread_mutex_unlock(&forks()->lock_print);
 		infos->starving = get_time_now();
-		if (check_death(infos->starving, infos, start, infos->time_to_eat / 1000))
+		if (check_death(infos->starving, infos, forks()->start, infos->time_to_eat / 1000))
 			return ((void *)&infos->id);
 		usleep(infos->time_to_eat);
-		lock_forks(infos);
-		make_forks_true(infos);
 		unlock_forks(infos);
 		pthread_mutex_lock(&forks()->lock_print);
-		now = get_time_now() - start;
+		now = get_time_now() - forks()->start;
 		printf("%ld %lld is sleeping\n", now, infos->id);
 		pthread_mutex_unlock(&forks()->lock_print);
-		if (check_death(infos->starving, infos, start, infos->time_to_sleep / 1000))
+		if (check_death(infos->starving, infos, forks()->start, infos->time_to_sleep / 1000))
 			return ((void *)&infos->id);
 		usleep(infos->time_to_sleep);
 		pthread_mutex_lock(&forks()->lock_print);
-		now = get_time_now() - start;
+		now = get_time_now() - forks()->start;
 		printf("%ld %lld is thinking\n", now, infos->id);
 		pthread_mutex_unlock(&forks()->lock_print);	
 	}
@@ -99,6 +87,7 @@ void	create_philosopher(char **argv)
 	infos = malloc(sizeof(t_infos) * (size));
 	init_infos(argv, infos, size);
 	socrates = malloc(sizeof(pthread_t) * infos->n_of_philos);
+	forks()->start = get_time_now();
 	while (++i < infos->n_of_philos)
 		pthread_create(&socrates[i], NULL, &live, &infos[i]);
 	i = -1;
