@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 21:21:27 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:42:41 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef unsigned long long int	t_ulli;
 
 typedef struct s_forks
 {
-	pthread_mutex_t	lock_forks;
+	pthread_mutex_t	*lock_forks;
 	pthread_mutex_t	lock_death;
 	pthread_mutex_t	lock_print;
 	int				*forks;
@@ -57,6 +57,8 @@ void		create_philosopher(char **argv);
 int			look_for_forks(t_infos *infos);
 void		make_forks_true(t_infos *infos);
 void		*the_sixth_sense(void *nothing_yet);
+void		unlock_forks(t_infos *infos);
+void		lock_forks(t_infos *infos);
 t_ulli		get_time_now(void);
 t_forks		*forks(void);
 void		teste(char *teste);

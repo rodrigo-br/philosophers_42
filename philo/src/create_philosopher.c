@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 21:28:33 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:00:54 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	*live(void *_infos)
 
 	start = get_time_now();
 	infos = (t_infos *)_infos;
+	if (!(infos->id % 2))
+		usleep(10);
 	infos->starving = start;
 	now = 0;
 	while (TRUE)
@@ -40,13 +42,13 @@ void	*live(void *_infos)
 		{
 			if (check_death(infos->starving, infos, start, 0))
 				return ((void *)&infos->id);
-			pthread_mutex_lock(&forks()->lock_forks);
+			lock_forks(infos);
 			if (look_for_forks(infos))
 				break ;
 			usleep(3);
-			pthread_mutex_unlock(&forks()->lock_forks);
+			unlock_forks(infos);
 		}
-		pthread_mutex_unlock(&forks()->lock_forks);
+		unlock_forks(infos);
 		pthread_mutex_lock(&forks()->lock_print);
 		now = get_time_now() - start;
 		printf("%ld %lld is eating\n", now, infos->id);
@@ -55,9 +57,9 @@ void	*live(void *_infos)
 		if (check_death(infos->starving, infos, start, infos->time_to_eat / 1000))
 			return ((void *)&infos->id);
 		usleep(infos->time_to_eat);
-		pthread_mutex_lock(&forks()->lock_forks);
+		lock_forks(infos);
 		make_forks_true(infos);
-		pthread_mutex_unlock(&forks()->lock_forks);
+		unlock_forks(infos);
 		usleep(1);
 		pthread_mutex_lock(&forks()->lock_print);
 		now = get_time_now() - start;
@@ -85,12 +87,15 @@ void	create_philosopher(char **argv)
 
 	i = -1;
 	pthread_create(&i_see_dead_people, NULL, &the_sixth_sense, NULL);
-	pthread_mutex_init(&forks()->lock_forks, NULL);
 	pthread_mutex_init(&forks()->lock_death, NULL);
 	size = ft_atolli(argv[0]);
 	forks()->forks = malloc(size * sizeof(int));
+	forks()->lock_forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * size);
 	while (++i < size)
+	{
+		pthread_mutex_init(&forks()->lock_forks[i], NULL);
 		forks()->forks[i] = TRUE;
+	}
 	i = -1;
 	infos = malloc(sizeof(t_infos) * (size));
 	init_infos(argv, infos, size);
@@ -101,6 +106,7 @@ void	create_philosopher(char **argv)
 	while (++i < infos->n_of_philos)
 		pthread_join(socrates[i], (void **)&died);
 	i = -1;
-	pthread_mutex_destroy(&forks()->lock_forks);
+	while (++i < size)
+		pthread_mutex_destroy(&forks()->lock_forks[i]);
 	pthread_mutex_destroy(&forks()->lock_death);
 }

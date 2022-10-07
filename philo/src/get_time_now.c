@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:07:22 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 07:36:39 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:11:54 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ t_ulli	get_time_now(void)
 	gettimeofday(&time, NULL);
 	seconds = time.tv_sec;
 	micro_seconds = time.tv_usec;
-	mili_seconds = (seconds * 1000000 + micro_seconds) / 1000;
+	mili_seconds = seconds * 1000 + micro_seconds / 1000;
 	return (mili_seconds);
 }

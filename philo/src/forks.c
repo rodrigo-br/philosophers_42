@@ -6,11 +6,35 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:45:13 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/06 19:45:26 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:05:56 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
+
+void	unlock_forks(t_infos *infos)
+{
+	if (infos->id == infos->n_of_philos)
+	{
+		pthread_mutex_unlock(&forks()->lock_forks[infos->id - 1]);
+		pthread_mutex_unlock(&forks()->lock_forks[0]);
+		return ;
+	}
+	pthread_mutex_unlock(&forks()->lock_forks[infos->id]);
+	pthread_mutex_unlock(&forks()->lock_forks[infos->id - 1]);
+}
+
+void	lock_forks(t_infos *infos)
+{
+	if (infos->id == infos->n_of_philos)
+	{
+		pthread_mutex_lock(&forks()->lock_forks[infos->id - 1]);
+		pthread_mutex_lock(&forks()->lock_forks[0]);
+		return ;
+	}
+	pthread_mutex_lock(&forks()->lock_forks[infos->id]);
+	pthread_mutex_lock(&forks()->lock_forks[infos->id - 1]);
+}
 
 t_forks	*forks(void)
 {
