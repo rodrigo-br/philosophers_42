@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/07 16:00:54 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:25:45 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	*live(void *_infos)
 			lock_forks(infos);
 			if (look_for_forks(infos))
 				break ;
-			usleep(3);
 			unlock_forks(infos);
+			usleep(10);
 		}
 		unlock_forks(infos);
 		pthread_mutex_lock(&forks()->lock_print);
@@ -60,7 +60,6 @@ void	*live(void *_infos)
 		lock_forks(infos);
 		make_forks_true(infos);
 		unlock_forks(infos);
-		usleep(1);
 		pthread_mutex_lock(&forks()->lock_print);
 		now = get_time_now() - start;
 		printf("%ld %lld is sleeping\n", now, infos->id);

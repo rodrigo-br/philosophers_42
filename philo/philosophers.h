@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/07 15:42:41 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:40:22 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define VERY_LARGE_N 999999999999999999
+# define VERY_LARGE_N	999999999999999999
+# define RIGHT			(infos->id % infos->n_of_philos)
+# define LEFT			(infos->id - 1)
 
 typedef enum e_bool
 {
