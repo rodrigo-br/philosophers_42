@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/07 17:19:28 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 22:11:05 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_forks
 	pthread_mutex_t	lock_print;
 	int				*forks;
 	t_bool			dead;
+	int				iterations;
 }	t_forks;
 
 typedef struct s_infos
@@ -48,7 +49,7 @@ typedef struct s_infos
 	t_ulli			time_to_die;
 	t_ulli			time_to_eat;
 	t_ulli			time_to_sleep;
-	t_ulli			iterations;
+	int				iterations;
 	t_bool			iterations_on;
 	long int		starving;
 }	t_infos;

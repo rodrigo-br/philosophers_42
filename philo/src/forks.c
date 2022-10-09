@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:45:13 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/07 17:07:50 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/07 21:35:06 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	lock_forks(t_infos *infos)
 {
 	pthread_mutex_lock(&forks()->lock_forks[left(infos)]);
 	pthread_mutex_lock(&forks()->lock_forks[right(infos)]);
-	
 }
 
 t_forks	*forks(void)
