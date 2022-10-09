@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/09 11:33:34 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:18:49 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	*live(void *_infos)
 void	create_philosopher(char **argv)
 {
 	t_infos			*infos;
-	pthread_t		*socrates;
-	pthread_t		i_see_dead_people;
 	t_ulli			i;
 	t_ulli			size;
 
@@ -86,17 +84,17 @@ void	create_philosopher(char **argv)
 	i = -1;
 	infos = malloc(sizeof(t_infos) * (size));
 	init_infos(argv, infos, size);
-	pthread_create(&i_see_dead_people, NULL, &the_sixth_sense, &infos[0]);
-	socrates = malloc(sizeof(pthread_t) * infos->n_of_philos);
+	pthread_create(&forks()->i_see_dead_people, NULL, &the_sixth_sense, &infos[0]);
+	forks()->socrates = malloc(sizeof(pthread_t) * infos->n_of_philos);
 	forks()->start = get_time_now();
 	while (++i < infos->n_of_philos)
 	{
 		infos[i].starving = forks()->start;
-		pthread_create(&socrates[i], NULL, &live, &infos[i]);
+		pthread_create(&forks()->socrates[i], NULL, &live, &infos[i]);
 	}
 	i = -1;
 	while (++i < infos->n_of_philos)
-		pthread_join(socrates[i], NULL);
+		pthread_join(forks()->socrates[i], NULL);
 	i = -1;
 	while (++i < size)
 		pthread_mutex_destroy(&forks()->lock_forks[i]);
