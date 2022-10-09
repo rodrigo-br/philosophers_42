@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/09 13:18:49 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:46:36 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	*live(void *_infos)
 	now = 0;
 	while (TRUE)
 	{
-		// if (check_death(infos->starving, infos, forks()->start, 0))
-		// 	return ((void *)&infos->id);
 		lock_forks(infos);
 		pthread_mutex_lock(&forks()->lock_print);
 		now = get_time_now() - forks()->start;
@@ -45,16 +43,12 @@ void	*live(void *_infos)
 		infos->starving = get_time_now();
 		if (!(--infos->iterations))
 			forks()->iterations--;
-		// if (check_death(infos->starving, infos, forks()->start, infos->time_to_eat / 1000))
-		// 	return ((void *)&infos->id);
 		usleep(infos->time_to_eat);
 		unlock_forks(infos);
 		pthread_mutex_lock(&forks()->lock_print);
 		now = get_time_now() - forks()->start;
 		printf("%ld %lld is sleeping\n", now, infos->id);
 		pthread_mutex_unlock(&forks()->lock_print);
-		// if (check_death(infos->starving, infos, forks()->start, infos->time_to_sleep / 1000))
-		// 	return ((void *)&infos->id);
 		usleep(infos->time_to_sleep);
 		pthread_mutex_lock(&forks()->lock_print);
 		now = get_time_now() - forks()->start;
