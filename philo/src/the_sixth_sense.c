@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:56:12 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/09 13:19:05 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:07:12 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,17 @@ void *the_sixth_sense(void *_infos)
 		iterations = infos->n_of_philos;
 	forks()->iterations = iterations;
 	usleep((infos[0].time_to_die * 0.9) / 1000);
-	while (TRUE)
+	while (!forks()->dead)
 	{
 		if (!forks()->iterations)
-			exit(printf("Geral comeu ;D\n"));
+			forks()->dead = TRUE;
 		if ((get_time_now() - infos[i].starving) > dead_end)
 		{
 			pthread_mutex_lock(&forks()->lock_death);
 			pthread_mutex_lock(&forks()->lock_print);
 			printf("%lld %lld died\n", (get_time_now() - forks()->start), infos[i].id);
-			forks()->dead = infos[i].id;
+			forks()->dead = TRUE;
 			end_it_all(infos);
-			exit(0);
-			usleep(666);
 		}
 		i = (i + 1) % infos->n_of_philos;
 	}
