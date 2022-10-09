@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:56:12 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/09 19:07:12 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:16:22 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ void	end_it_all(t_infos	*infos)
 		pthread_mutex_destroy(&forks()->lock_forks[i]);
 		pthread_detach(forks()->socrates[i]);
 	}
-	pthread_detach(forks()->i_see_dead_people);
 	free(forks()->forks);
 	free(forks()->lock_forks);
 	free(forks()->socrates);
-	free(infos);
 }
 
 void *the_sixth_sense(void *_infos)
@@ -56,9 +54,9 @@ void *the_sixth_sense(void *_infos)
 			pthread_mutex_lock(&forks()->lock_print);
 			printf("%lld %lld died\n", (get_time_now() - forks()->start), infos[i].id);
 			forks()->dead = TRUE;
-			end_it_all(infos);
 		}
 		i = (i + 1) % infos->n_of_philos;
 	}
+	end_it_all(infos);
 	return (NULL);
 }
