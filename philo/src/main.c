@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 17:17:40 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:36:41 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	start_a_very_boring_friendship(t_infos *infos, t_philos *philos)
 		philos[i].forks = forks;
 		philos[i].lock_death = death;
 		philos[i].lock_print = print;
-		philos[i].dead = 0;
 		philos[i].meals = infos->iterations;
 		philos[i].infos = infos;
 		philos[i].starving = 0;

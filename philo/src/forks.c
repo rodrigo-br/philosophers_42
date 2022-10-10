@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:45:13 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 17:22:33 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:38:22 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	lock_forks(t_philos *philos)
 	}
 	printf("%lu %d has taken the fork\n", \
 	(time_now() - philos->infos->start), philos->id);
-	while (!philos->dead)
+	while (!philos->infos->dead)
 		;
 }

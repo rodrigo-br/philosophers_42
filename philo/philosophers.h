@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 17:02:47 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:36:19 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_infos
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				iterations;
+	int				dead;
 }	t_infos;
 
 typedef struct s_philos
@@ -41,7 +42,6 @@ typedef struct s_philos
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock_death;
 	pthread_mutex_t	lock_print;
-	int				dead;
 	int				meals;
 	t_infos			*infos;
 	unsigned long	starving;

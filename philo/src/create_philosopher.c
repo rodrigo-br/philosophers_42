@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 17:26:39 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:46:14 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static void	sleep_n_think(t_philos *ph)
 {
 	pthread_mutex_lock(&ph->lock_print);
-	if (!ph->dead && ph->infos->iterations)
+	if (!ph->infos->dead && ph->infos->iterations)
 		printf("%lu %d is sleeping\n", \
 		time_now() - ph->infos->start, ph->id);
 	pthread_mutex_unlock(&ph->lock_print);
 	usleep(ph->infos->time_to_sleep);
 	pthread_mutex_lock(&ph->lock_print);
-	if (!ph->dead && ph->infos->iterations)
+	if (!ph->infos->dead && ph->infos->iterations)
 		printf("%lu %d is thinking\n", \
 		time_now() - ph->infos->start, ph->id);
 	pthread_mutex_unlock(&ph->lock_print);
@@ -30,7 +30,7 @@ static void	sleep_n_think(t_philos *ph)
 static void	eat(t_philos *ph)
 {
 	pthread_mutex_lock(&ph->lock_print);
-	if (!ph->dead)
+	if (!ph->infos->dead)
 	{
 		ph->starving = time_now();
 		printf("%lu %d is eating\n", \
@@ -39,7 +39,7 @@ static void	eat(t_philos *ph)
 	if (!(--ph->meals))
 		ph->infos->iterations--;
 	if (!ph->infos->iterations)
-		usleep(500);
+		ph->infos->dead = TRUE;
 	pthread_mutex_unlock(&ph->lock_print);
 }
 
@@ -62,7 +62,7 @@ void	*live(void *_philos)
 	philos = (t_philos *)_philos;
 	if (!(philos->id % 2))
 		usleep(100);
-	while (!philos->dead)
+	while (!philos->infos->dead)
 	{
 		lock_forks(philos);
 		eat(philos);

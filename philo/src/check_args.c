@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 17:16:56 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:36:56 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	init_infos(char **argv, t_infos *inf)
 	inf->time_to_sleep = ft_atolli(argv[3]) * 1000;
 	if (argv[4])
 		inf->iterations = ft_atolli(argv[4]);
+	inf->dead = 0;
 }
 
 int	check_args(int argc, char **argv)
