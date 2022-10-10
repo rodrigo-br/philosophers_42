@@ -4,10 +4,9 @@ CFLAGS	=	-Wall -Wextra -Werror -g3 -pthread
 OBJ_DIR	=	obj
 OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-SRCS	=	$(MAIN) $(TESTE)
-MAIN	=	main.c check_args.c get_time_now.c create_philosopher.c \
+SRCS	=	$(MAIN)
+MAIN	=	main.c check_args.c time_now.c create_philosopher.c \
 			forks.c the_sixth_sense.c
-TESTE	=	teste.c
 
 VPATH	=	src src/teste
 HEADER	=	philosophers.h
