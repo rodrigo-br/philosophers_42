@@ -6,21 +6,11 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:45:13 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 11:06:45 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:14:51 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
-
-int	right(t_infos *infos)
-{
-	return (infos->id % infos->n_of_philos);
-}
-
-int	left(t_infos *infos)
-{
-	return (infos->id - 1);
-}
 
 void	unlock_forks(t_infos *infos)
 {
@@ -32,50 +22,45 @@ void	unlock_forks(t_infos *infos)
 
 void	lock_forks(t_infos *infos)
 {
-	if (infos->n_of_philos == 1)
+	if (infos->n_of_philos != 1)
 	{
-		printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
-		while (!forks()->dead)
-			;
+		pthread_mutex_lock(&forks()->lock_forks[left(infos)]);
+		pthread_mutex_lock(&forks()->lock_forks[right(infos)]);
+		return ;
 	}
-	pthread_mutex_lock(&forks()->lock_forks[left(infos)]);
-	pthread_mutex_lock(&forks()->lock_forks[right(infos)]);
+	printf("%lld %lld has taken the fork\n", \
+	(time_now() - forks()->start), infos->id);
+	while (!forks()->dead)
+		;
 }
 
-t_forks	*forks(void)
-{
-	static t_forks	fork;
-
-	return (&fork);
-}
-
-int	look_for_forks(t_infos *infos)
+void	look_for_forks(t_infos *infos)
 {
 	if (infos->n_of_philos == 1)
-		return (0);
+		return ;
 	if (!infos->id % 2)
 	{
-		if (forks()->forks[left(infos)] && forks()->forks[right(infos)] && forks()->iterations && !forks()->dead)
+		if (forks()->forks[left(infos)] && forks()->forks[right(infos)]
+			&& forks()->iterations && !forks()->dead)
 		{
 			forks()->forks[left(infos)] = FALSE;
-			printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
+			printf("%lld %lld has taken the fork\n", \
+			(time_now() - forks()->start), infos->id);
 			forks()->forks[right(infos)] = FALSE;
-			printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
-			return (1);
+			printf("%lld %lld has taken the fork\n", \
+			(time_now() - forks()->start), infos->id);
 		}
 	}
-	else
+	else if (forks()->forks[right(infos)] && forks()->forks[left(infos)]
+		&& forks()->iterations && !forks()->dead)
 	{
-		if (forks()->forks[right(infos)] && forks()->forks[left(infos)] && forks()->iterations && !forks()->dead)
-		{
-			forks()->forks[right(infos)] = FALSE;
-			printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
-			forks()->forks[left(infos)] = FALSE;
-			printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
-			return (1);
-		}
+		forks()->forks[right(infos)] = FALSE;
+		printf("%lld %lld has taken the fork\n", \
+		(time_now() - forks()->start), infos->id);
+		forks()->forks[left(infos)] = FALSE;
+		printf("%lld %lld has taken the fork\n", \
+		(time_now() - forks()->start), infos->id);
 	}
-	return (0);
 }
 
 void	make_forks_true(t_infos *infos)

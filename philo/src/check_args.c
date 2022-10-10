@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/09 18:47:42 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 11:33:32 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ static int	is_all_num(char **argv)
 	return (1);
 }
 
-/* Resolvi multiplicar aqui por 1000 ao invés de no usleep porque aqui só
-multiplica uma vez, mas se deixar lá no usleep, vai ficar efetuando a
-operação várias vezes em loop */
 void	init_infos(char **argv, t_infos *infos, t_ulli size)
 {
 	int	i_size;
@@ -89,6 +86,6 @@ int	check_args(int argc, char **argv)
 		|| !ft_atolli(argv[3]) || !ft_atolli(argv[2]) || !ft_atolli(argv[1]))
 		return (printf("incorrect args, check subject\n"));
 	if (argc == 6 && ft_atolli(argv[4]) == 0)
-		return (printf("n of times each philo must eat should be > 0\n"));		
+		return (printf("n of times each philo must eat should be > 0\n"));
 	return (0);
 }

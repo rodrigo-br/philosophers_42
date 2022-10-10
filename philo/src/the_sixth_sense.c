@@ -6,11 +6,21 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:56:12 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 10:51:24 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:10:24 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
+
+static void	make_it_die(t_infos infos)
+{
+	pthread_mutex_lock(&forks()->lock_death);
+	pthread_mutex_lock(&forks()->lock_print);
+	printf("%lld %lld died\n", (time_now() - forks()->start), infos.id);
+	forks()->dead = TRUE;
+	pthread_mutex_unlock(&forks()->lock_death);
+	pthread_mutex_unlock(&forks()->lock_print);
+}
 
 void	end_it_all(t_infos	*infos)
 {
@@ -32,7 +42,7 @@ void	end_it_all(t_infos	*infos)
 	free(infos);
 }
 
-void *the_sixth_sense(void *_infos)
+void	the_sixth_sense(void *_infos)
 {
 	t_infos		*infos;
 	int			iterations;
@@ -51,17 +61,11 @@ void *the_sixth_sense(void *_infos)
 	{
 		if (!forks()->iterations)
 			forks()->dead = TRUE;
-		if ((get_time_now() - infos[i].starving) > dead_end)
+		if ((time_now() - infos[i].starving) > dead_end)
 		{
-			pthread_mutex_lock(&forks()->lock_death);
-			pthread_mutex_lock(&forks()->lock_print);
-			printf("%lld %lld died\n", (get_time_now() - forks()->start), infos[i].id);
-			forks()->dead = TRUE;
-			pthread_mutex_unlock(&forks()->lock_death);
-			pthread_mutex_unlock(&forks()->lock_print);
+			make_it_die(infos[i]);
 		}
 		i = (i + 1) % infos->n_of_philos;
 	}
 	end_it_all(infos);
-	return (NULL);
 }

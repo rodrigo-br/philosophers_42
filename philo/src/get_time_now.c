@@ -6,13 +6,13 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:07:22 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/07 11:11:54 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 11:36:14 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-t_ulli	get_time_now(void)
+t_ulli	time_now(void)
 {
 	struct timeval	time;
 	t_ulli			seconds;

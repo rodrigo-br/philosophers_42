@@ -6,11 +6,36 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 10:48:57 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 11:52:55 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
+
+static void	sleep_n_think(t_infos *inf)
+{
+	pthread_mutex_lock(&forks()->lock_print);
+	if (!forks()->dead)
+		printf("%lld %lld is sleeping\n", time_now() - forks()->start, inf->id);
+	pthread_mutex_unlock(&forks()->lock_print);
+	usleep(inf->time_to_sleep);
+	pthread_mutex_lock(&forks()->lock_print);
+	if (!forks()->dead)
+		printf("%lld %lld is thinking\n", time_now() - forks()->start, inf->id);
+	pthread_mutex_unlock(&forks()->lock_print);
+}
+
+static void	eat(t_infos *inf)
+{
+	pthread_mutex_lock(&forks()->lock_print);
+	look_for_forks(inf);
+	if (!forks()->dead)
+		printf("%lld %lld is eating\n", (time_now() - forks()->start), inf->id);
+	inf->starving = time_now();
+	if (!(--inf->iterations))
+		forks()->iterations--;
+	pthread_mutex_unlock(&forks()->lock_print);
+}
 
 static t_ulli	ft_atolli(const char *n)
 {
@@ -26,39 +51,19 @@ static t_ulli	ft_atolli(const char *n)
 
 void	*live(void *_infos)
 {
-	long int	now;
 	t_infos		*infos;
 
 	infos = (t_infos *)_infos;
 	if (!(infos->id % 2))
 		usleep(100);
-	now = 0;
 	while (!forks()->dead)
 	{
 		lock_forks(infos);
-		pthread_mutex_lock(&forks()->lock_print);
-		look_for_forks(infos);
-		now = get_time_now() - forks()->start;
-		if (!forks()->dead)
-			printf("%ld %lld is eating\n", now, infos->id);
-		infos->starving = get_time_now();
-		if (!(--infos->iterations))
-			forks()->iterations--;
-		pthread_mutex_unlock(&forks()->lock_print);
+		eat(infos);
 		usleep(infos->time_to_eat);
 		make_forks_true(infos);
 		unlock_forks(infos);
-		pthread_mutex_lock(&forks()->lock_print);
-		now = get_time_now() - forks()->start;
-		if (!forks()->dead)
-			printf("%ld %lld is sleeping\n", now, infos->id);
-		pthread_mutex_unlock(&forks()->lock_print);
-		usleep(infos->time_to_sleep);
-		pthread_mutex_lock(&forks()->lock_print);
-		now = get_time_now() - forks()->start;
-		if (!forks()->dead)
-			printf("%ld %lld is thinking\n", now, infos->id);
-		pthread_mutex_unlock(&forks()->lock_print);	
+		sleep_n_think(infos);
 	}
 	return ((void *)&infos->id);
 }
@@ -69,24 +74,19 @@ void	create_philosopher(char **argv)
 	t_ulli			i;
 	t_ulli			size;
 
-	i = -1;
-	forks()->dead = FALSE;
-	forks()->start = 0;
-	pthread_mutex_init(&forks()->lock_death, NULL);
-	pthread_mutex_init(&forks()->lock_print, NULL);
 	size = ft_atolli(argv[0]);
-	forks()->forks = malloc(size * sizeof(int));
-	forks()->lock_forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * size);
+	summon_forks(size);
+	i = -1;
 	while (++i < size)
 	{
 		pthread_mutex_init(&forks()->lock_forks[i], NULL);
 		forks()->forks[i] = TRUE;
 	}
-	i = -1;
 	infos = malloc(sizeof(t_infos) * (size));
 	init_infos(argv, infos, size);
 	forks()->socrates = malloc(sizeof(pthread_t) * infos->n_of_philos);
-	forks()->start = get_time_now();
+	forks()->start = time_now();
+	i = -1;
 	while (++i < infos->n_of_philos)
 	{
 		infos[i].starving = forks()->start;
