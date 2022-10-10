@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/09 19:14:40 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 10:48:57 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,33 @@ void	*live(void *_infos)
 
 	infos = (t_infos *)_infos;
 	if (!(infos->id % 2))
-		usleep(10);
+		usleep(100);
 	now = 0;
 	while (!forks()->dead)
 	{
 		lock_forks(infos);
 		pthread_mutex_lock(&forks()->lock_print);
+		look_for_forks(infos);
 		now = get_time_now() - forks()->start;
-		printf("%ld %lld is eating\n", now, infos->id);
-		pthread_mutex_unlock(&forks()->lock_print);
+		if (!forks()->dead)
+			printf("%ld %lld is eating\n", now, infos->id);
 		infos->starving = get_time_now();
 		if (!(--infos->iterations))
 			forks()->iterations--;
+		pthread_mutex_unlock(&forks()->lock_print);
 		usleep(infos->time_to_eat);
+		make_forks_true(infos);
 		unlock_forks(infos);
 		pthread_mutex_lock(&forks()->lock_print);
 		now = get_time_now() - forks()->start;
-		printf("%ld %lld is sleeping\n", now, infos->id);
+		if (!forks()->dead)
+			printf("%ld %lld is sleeping\n", now, infos->id);
 		pthread_mutex_unlock(&forks()->lock_print);
 		usleep(infos->time_to_sleep);
 		pthread_mutex_lock(&forks()->lock_print);
 		now = get_time_now() - forks()->start;
-		printf("%ld %lld is thinking\n", now, infos->id);
+		if (!forks()->dead)
+			printf("%ld %lld is thinking\n", now, infos->id);
 		pthread_mutex_unlock(&forks()->lock_print);	
 	}
 	return ((void *)&infos->id);
@@ -68,6 +73,7 @@ void	create_philosopher(char **argv)
 	forks()->dead = FALSE;
 	forks()->start = 0;
 	pthread_mutex_init(&forks()->lock_death, NULL);
+	pthread_mutex_init(&forks()->lock_print, NULL);
 	size = ft_atolli(argv[0]);
 	forks()->forks = malloc(size * sizeof(int));
 	forks()->lock_forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * size);

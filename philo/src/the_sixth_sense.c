@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:56:12 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/09 19:16:22 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 10:51:24 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ void	end_it_all(t_infos	*infos)
 	while (++i < counter)
 	{
 		pthread_mutex_destroy(&forks()->lock_forks[i]);
-		pthread_detach(forks()->socrates[i]);
+		pthread_join(forks()->socrates[i], NULL);
 	}
+	pthread_mutex_destroy(&forks()->lock_print);
+	pthread_mutex_destroy(&forks()->lock_death);
 	free(forks()->forks);
 	free(forks()->lock_forks);
 	free(forks()->socrates);
+	free(infos);
 }
 
 void *the_sixth_sense(void *_infos)
@@ -54,6 +57,8 @@ void *the_sixth_sense(void *_infos)
 			pthread_mutex_lock(&forks()->lock_print);
 			printf("%lld %lld died\n", (get_time_now() - forks()->start), infos[i].id);
 			forks()->dead = TRUE;
+			pthread_mutex_unlock(&forks()->lock_death);
+			pthread_mutex_unlock(&forks()->lock_print);
 		}
 		i = (i + 1) % infos->n_of_philos;
 	}

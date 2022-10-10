@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:45:13 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/07 21:35:06 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 10:54:34 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,27 @@ int	look_for_forks(t_infos *infos)
 {
 	if (infos->n_of_philos == 1)
 		return (0);
-	if (forks()->forks[left(infos)] && forks()->forks[right(infos)])
+	if (!infos->id % 2)
 	{
-		forks()->forks[left(infos)] = FALSE;
-		forks()->forks[right(infos)] = FALSE;
-		return (1);
+		if (forks()->forks[left(infos)] && forks()->forks[right(infos)] && forks()->iterations && !forks()->dead)
+		{
+			forks()->forks[left(infos)] = FALSE;
+			printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
+			forks()->forks[right(infos)] = FALSE;
+			printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
+			return (1);
+		}
+	}
+	else
+	{
+		if (forks()->forks[right(infos)] && forks()->forks[left(infos)] && forks()->iterations && !forks()->dead)
+		{
+			forks()->forks[right(infos)] = FALSE;
+			printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
+			forks()->forks[left(infos)] = FALSE;
+			printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
+			return (1);
+		}
 	}
 	return (0);
 }
