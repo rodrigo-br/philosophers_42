@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 16:06:34 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:43:54 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,26 @@
 
 typedef unsigned long long int	t_ulli;
 
-typedef struct s_forks
+typedef struct s_philos
 {
-	unsigned long	start;
-	pthread_t		*socrates;
-	pthread_t		i_see_dead_people;
-	pthread_mutex_t	*lock_forks;
+	int				id;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock_death;
 	pthread_mutex_t	lock_print;
-	int				*forks;
 	int				dead;
-	int				iterations;
-}	t_forks;
+	int				meals;
+	t_infos			infos;
+	unsigned long	starving;
+}	t_philos;
 
 typedef struct s_infos
 {
-	int				id;
+	unsigned long	start;
 	int				n_of_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				iterations;
-	int				iterations_on;
-	unsigned long	starving;
-	t_forks			*forks;
 }	t_infos;
 
 int				check_args(int argc, char **argv);

@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 16:06:20 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:08:30 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ int	left(t_infos *infos)
 	return (infos->id - 1);
 }
 
-void	summon_forks(int size, t_forks *forks)
+	// int				id;
+	// pthread_mutex_t	*forks;
+	// pthread_mutex_t	lock_death;
+	// pthread_mutex_t	lock_print;
+	// int				dead;
+	// int				meals;
+	// t_infos			infos;
+	// unsigned long	starving;
+void	start_a_very_boring_friendship(t_infos *infos, t_philos *philos)
 {
-	forks->dead = 0;
-	forks->start = 0;
-	pthread_mutex_init(&forks->lock_death, NULL);
-	pthread_mutex_init(&forks->lock_print, NULL);
-	forks->forks = malloc(size * sizeof(int));
-	forks->lock_forks = malloc(sizeof(pthread_mutex_t) * size);
+	
 }
 
 int	main(int argc, char **argv)

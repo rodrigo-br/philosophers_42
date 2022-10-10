@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:43:53 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 16:05:57 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:05:53 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,23 @@ void	*live(void *_infos)
 void	create_philosopher(char **argv)
 {
 	t_infos		*infos;
+	t_philos	*philos;
+	pthread_t	*socrates;
 	int			i;
 	int			size;
-	t_forks		*forks;
 
 	size = ft_atolli(argv[0]);
 	i = -1;
-	forks = (t_forks *)malloc(sizeof(t_forks));
-	summon_forks(size, forks);
+	infos = (t_infos *)malloc(sizeof(t_infos));
+	init_infos(argv, infos);
+	philos = malloc(sizeof(t_philos) * (size));
+	start_a_very_boring_friendship(infos, philos);
 	while (++i < size)
 	{
 		pthread_mutex_init(&forks->lock_forks[i], NULL);
 		forks->forks[i] = TRUE;
 	}
-	infos = malloc(sizeof(t_infos) * (size));
-	init_infos(argv, infos, size, forks);
-	forks->socrates = malloc(sizeof(pthread_t) * infos->n_of_philos);
+	socrates = malloc(sizeof(pthread_t) * infos->n_of_philos);
 	forks->start = time_now();
 	i = -1;
 	while (++i < infos->n_of_philos)

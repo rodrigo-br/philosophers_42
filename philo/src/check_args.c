@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 16:06:15 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:00:37 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,28 +57,21 @@ static int	is_all_num(char **argv)
 	return (1);
 }
 
-void	init_infos(char **argv, t_infos *inf, int n, t_forks *forks)
+//	unsigned long	start;
+// 	int				n_of_philos;
+// 	int				time_to_die;
+// 	int				time_to_eat;
+// 	int				time_to_sleep;
+// 	int				iterations;
+void	init_infos(char **argv, t_infos *inf)
 {
-	int	i_size;
-
-	i_size = -1;
-	while (++i_size < n)
-	{
-		inf[i_size].iterations = -1;
-		inf[i_size].id = i_size + 1;
-		inf[i_size].n_of_philos = ft_atolli(argv[0]);
-		inf[i_size].time_to_die = ft_atolli(argv[1]) * 1000;
-		inf[i_size].time_to_eat = ft_atolli(argv[2]) * 1000;
-		inf[i_size].time_to_sleep = ft_atolli(argv[3]) * 1000;
-		if (argv[4])
-		{
-			inf[i_size].iterations = ft_atolli(argv[4]);
-			inf[i_size].iterations_on = TRUE;
-		}
-		else
-			inf[i_size].iterations_on = FALSE;
-		inf[i_size].forks = forks;
-	}
+	inf->iterations = -1;
+	inf->n_of_philos = ft_atolli(argv[0]);
+	inf->time_to_die = ft_atolli(argv[1]) * 1000;
+	inf->time_to_eat = ft_atolli(argv[2]) * 1000;
+	inf->time_to_sleep = ft_atolli(argv[3]) * 1000;
+	if (argv[4])
+		inf->iterations = ft_atolli(argv[4]);
 }
 
 int	check_args(int argc, char **argv)
