@@ -6,33 +6,47 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 15:08:30 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:39:02 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-int	right(t_infos *infos)
+int	right(t_philos *philos)
 {
-	return (infos->id % infos->n_of_philos);
+	return (philos->id % philos->infos->n_of_philos);
 }
 
-int	left(t_infos *infos)
+int	left(t_philos *philos)
 {
-	return (infos->id - 1);
+	return (philos->id - 1);
 }
 
-	// int				id;
-	// pthread_mutex_t	*forks;
-	// pthread_mutex_t	lock_death;
-	// pthread_mutex_t	lock_print;
-	// int				dead;
-	// int				meals;
-	// t_infos			infos;
-	// unsigned long	starving;
 void	start_a_very_boring_friendship(t_infos *infos, t_philos *philos)
 {
-	
+	int				i;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	death;
+	pthread_mutex_t	print;
+
+	i = -1;
+	forks = malloc(sizeof(pthread_mutex_t) * infos->n_of_philos);
+	while (++i < infos->n_of_philos)
+		pthread_mutex_init(&forks[i], NULL);
+	pthread_mutex_init(&death, NULL);
+	pthread_mutex_init(&print, NULL);
+	i = -1;
+	while (++i < infos->n_of_philos)
+	{
+		philos[i].id = i + 1;
+		philos[i].forks = forks;
+		philos[i].lock_death = death;
+		philos[i].lock_print = print;
+		philos[i].dead = 0;
+		philos[i].meals = infos->iterations;
+		philos[i].infos = infos;
+		philos[i].starving = 0;
+	}
 }
 
 int	main(int argc, char **argv)

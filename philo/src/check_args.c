@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 15:00:37 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:39:18 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,6 @@ static int	is_all_num(char **argv)
 	return (1);
 }
 
-//	unsigned long	start;
-// 	int				n_of_philos;
-// 	int				time_to_die;
-// 	int				time_to_eat;
-// 	int				time_to_sleep;
-// 	int				iterations;
 void	init_infos(char **argv, t_infos *inf)
 {
 	inf->iterations = -1;
