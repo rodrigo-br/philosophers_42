@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 16:39:02 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:17:40 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	start_a_very_boring_friendship(t_infos *infos, t_philos *philos)
 		philos[i].infos = infos;
 		philos[i].starving = 0;
 	}
+	infos->iterations = infos->n_of_philos;
 }
 
 int	main(int argc, char **argv)

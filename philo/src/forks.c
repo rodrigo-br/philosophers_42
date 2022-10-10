@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:45:13 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 16:51:58 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:22:33 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	unlock_forks(t_philos *philos)
 
 void	lock_forks(t_philos *philos)
 {
-	if (philos->infos->n_of_philos != 1)
+	if (philos->infos->n_of_philos != 1 && philos->infos->iterations)
 	{
 		pthread_mutex_lock(&philos->forks[left(philos)]);
 		printf("%lu %d has taken the fork\n", \

@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:56:12 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 17:05:53 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:14:32 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	end_it_all(t_philos *philos, pthread_t *socrates)
 	pthread_mutex_destroy(&philos->lock_print);
 	pthread_mutex_destroy(&philos->lock_death);
 	free(philos->forks);
-	free(philos->forks);
 	free(socrates);
 }
 
@@ -47,17 +46,19 @@ void	the_sixth_sense(t_philos *philos, pthread_t *socrates)
 
 	i = 0;
 	dead_end = philos->infos->time_to_die / 1000;
-	philos->meals = philos->infos->iterations;
 	usleep(dead_end * 0.9);
 	while (!philos->dead)
 	{
 		if (!philos->infos->iterations)
-			philos->dead = TRUE;
+		{
+			end_it_all(philos, socrates);
+			return ;
+		}
 		if ((time_now() - philos[i].starving) > dead_end)
 		{
 			make_it_die(philos[i]);
+			return ;
 		}
 		i = (i + 1) % philos->infos->n_of_philos;
 	}
-	end_it_all(philos, socrates);
 }
