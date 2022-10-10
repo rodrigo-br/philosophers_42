@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 17:45:13 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 10:54:34 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 11:06:45 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,20 @@ int	left(t_infos *infos)
 
 void	unlock_forks(t_infos *infos)
 {
+	if (infos->n_of_philos == 1)
+		return ;
 	pthread_mutex_unlock(&forks()->lock_forks[right(infos)]);
 	pthread_mutex_unlock(&forks()->lock_forks[left(infos)]);
 }
 
 void	lock_forks(t_infos *infos)
 {
+	if (infos->n_of_philos == 1)
+	{
+		printf("%lld %lld has taken the fork\n", (get_time_now() - forks()->start), infos->id);
+		while (!forks()->dead)
+			;
+	}
 	pthread_mutex_lock(&forks()->lock_forks[left(infos)]);
 	pthread_mutex_lock(&forks()->lock_forks[right(infos)]);
 }
