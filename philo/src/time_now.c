@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_time_now.c                                     :+:      :+:    :+:   */
+/*   time_now.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:07:22 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 11:36:14 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:42:54 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-t_ulli	time_now(void)
+unsigned long	time_now(void)
 {
 	struct timeval	time;
-	t_ulli			seconds;
-	t_ulli			micro_seconds;
-	t_ulli			mili_seconds;
+	unsigned long	seconds;
+	unsigned long	micro_seconds;
+	unsigned long	mili_seconds;
 
 	gettimeofday(&time, NULL);
 	seconds = time.tv_sec;

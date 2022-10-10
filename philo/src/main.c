@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/10 12:04:36 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:37:51 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,14 @@ int	left(t_infos *infos)
 	return (infos->id - 1);
 }
 
-t_forks	*forks(void)
+void	summon_forks(int size, t_forks *forks)
 {
-	static t_forks	fork;
-
-	return (&fork);
-}
-
-void	summon_forks(t_ulli size)
-{
-	forks()->dead = FALSE;
-	forks()->start = 0;
-	pthread_mutex_init(&forks()->lock_death, NULL);
-	pthread_mutex_init(&forks()->lock_print, NULL);
-	forks()->forks = malloc(size * sizeof(int));
-	forks()->lock_forks = malloc(sizeof(pthread_mutex_t) * size);
+	forks->dead = 0;
+	forks->start = 0;
+	pthread_mutex_init(&forks->lock_death, NULL);
+	pthread_mutex_init(&forks->lock_print, NULL);
+	forks->forks = malloc(size * sizeof(int));
+	forks->lock_forks = malloc(sizeof(pthread_mutex_t) * size);
 }
 
 int	main(int argc, char **argv)
