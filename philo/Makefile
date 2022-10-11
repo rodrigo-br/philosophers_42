@@ -5,8 +5,7 @@ OBJ_DIR	=	obj
 OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 SRCS	=	$(MAIN)
-MAIN	=	main.c check_args.c time_now.c create_philosopher.c \
-			forks.c the_sixth_sense.c
+MAIN	=	main.c check_args.c architect.c
 
 VPATH	=	src src/teste
 HEADER	=	philosophers.h
