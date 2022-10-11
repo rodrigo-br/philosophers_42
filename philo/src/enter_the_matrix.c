@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 23:47:56 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 00:13:00 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	choose_the_pills(t_philos *neb_crew)
 		knock_knock_neo(neb_crew, PILLS_TAKEN);
 	}
 	knock_knock_neo(neb_crew, EAT);
-	neb_crew->meals--;
 	usleep(neb_crew->infos->time_to_eat * 1000);
 	pthread_mutex_unlock(neb_crew->blue);
 	pthread_mutex_unlock(neb_crew->red);
@@ -81,7 +80,7 @@ void	*crew_do_your_thing(void *_neb_crew)
 
 	neb_crew = (t_philos *)_neb_crew;
 	if (!(neb_crew->id % 2))
-		usleep(10);
+		usleep(50);
 	while (ignorance_is_a_bliss(neb_crew->infos))
 	{
 		choose_the_pills(neb_crew);
@@ -93,7 +92,7 @@ void	*crew_do_your_thing(void *_neb_crew)
 		knock_knock_neo(neb_crew, SLEEP);
 		usleep(neb_crew->infos->time_to_sleep * 1000);
 		knock_knock_neo(neb_crew, THINK);
-		usleep(100);
+		usleep(50);
 	}
 	return (EXCHANGE_YOUR_FRIENDS_FOR_A_HAMBURGUER);
 }
