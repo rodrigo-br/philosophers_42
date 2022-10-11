@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:10:42 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 15:43:44 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:29:31 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_infos(char **argv, t_infos *infos)
 	infos->time_to_eat = ft_atoi(argv[2]);
 	infos->time_to_sleep = ft_atoi(argv[3]);
 	infos->dead = 0;
+	infos->end = 0;
 	infos->must_eat = -1;
 	infos->start = 0;
 	if (argv[4])

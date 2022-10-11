@@ -6,11 +6,47 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 00:13:00 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:44:40 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
+
+int	ignorance_is_a_bliss(t_infos *infos)
+{
+	int	end;
+
+	pthread_mutex_lock(infos->lock_end);
+	end = 1;	
+	if (infos->end || infos->n_of_philos == 1)
+	{
+		end = 0;
+	}
+	pthread_mutex_unlock(infos->lock_end);
+	return (end);
+}
+
+void	choose_the_pills(t_philos *neb_crew)
+{
+	if (!(neb_crew->id % 2))
+	{
+		pthread_mutex_lock(neb_crew->blue);
+		knock_knock_neo(neb_crew, PILLS_TAKEN);
+		pthread_mutex_lock(neb_crew->red);
+		knock_knock_neo(neb_crew, PILLS_TAKEN);
+	}
+	else
+	{
+		pthread_mutex_lock(neb_crew->red);
+		knock_knock_neo(neb_crew, PILLS_TAKEN);
+		pthread_mutex_lock(neb_crew->blue);
+		knock_knock_neo(neb_crew, PILLS_TAKEN);
+	}
+	knock_knock_neo(neb_crew, EAT);
+	usleep(neb_crew->infos->time_to_eat * 1000);
+	pthread_mutex_unlock(neb_crew->blue);
+	pthread_mutex_unlock(neb_crew->red);
+}
 
 void	*do_the_oracle_thing(void *_neb_crew)
 {
@@ -40,46 +76,12 @@ void	*do_the_oracle_thing(void *_neb_crew)
 	return (NEO_SAVED_THE_DAY_YAAAAAY);
 }
 
-int	ignorance_is_a_bliss(t_infos *infos)
-{
-	pthread_mutex_lock(infos->lock_end);
-	if (infos->dead || infos->n_of_philos == 1)
-	{
-		pthread_mutex_unlock(infos->lock_end);
-		return (0);
-	}
-	pthread_mutex_unlock(infos->lock_end);
-	return (1);
-}
-
-void	choose_the_pills(t_philos *neb_crew)
-{
-	if (!(neb_crew->id % 2))
-	{
-		pthread_mutex_lock(neb_crew->blue);
-		knock_knock_neo(neb_crew, PILLS_TAKEN);
-		pthread_mutex_lock(neb_crew->red);
-		knock_knock_neo(neb_crew, PILLS_TAKEN);
-	}
-	else
-	{
-		pthread_mutex_lock(neb_crew->red);
-		knock_knock_neo(neb_crew, PILLS_TAKEN);
-		pthread_mutex_lock(neb_crew->blue);
-		knock_knock_neo(neb_crew, PILLS_TAKEN);
-	}
-	knock_knock_neo(neb_crew, EAT);
-	usleep(neb_crew->infos->time_to_eat * 1000);
-	pthread_mutex_unlock(neb_crew->blue);
-	pthread_mutex_unlock(neb_crew->red);
-}
-
 void	*crew_do_your_thing(void *_neb_crew)
 {
 	t_philos	*neb_crew;
 
 	neb_crew = (t_philos *)_neb_crew;
-	if (!(neb_crew->id % 2))
+	if (neb_crew->id % 2)
 		usleep(50);
 	while (ignorance_is_a_bliss(neb_crew->infos))
 	{

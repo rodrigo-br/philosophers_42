@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 23:24:39 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:29:10 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_infos
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			must_eat;
+	int			end;
 	int			dead;
 }	t_infos;
 
