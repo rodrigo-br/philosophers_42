@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:10:42 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 12:28:50 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:30:52 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	init_crew(t_infos *infos, t_mutex **pills, t_philos **neb_crew)
 	while (++i < infos->n_of_philos)
 	{
 		(*neb_crew)[i].id = i + 1;
-		(*neb_crew)[i].blue = pills[i];
-		(*neb_crew)[i].red = pills[(*neb_crew)[i].id % infos->n_of_philos];
+		(*neb_crew)[i].blue = &(*pills)[i];
+		(*neb_crew)[i].red = &(*pills)[(*neb_crew)[i].id % infos->n_of_philos];
 		(*neb_crew)[i].meals = infos->must_eat;
 		(*neb_crew)[i].infos = infos;
 		(*neb_crew)[i].starving = 0;
