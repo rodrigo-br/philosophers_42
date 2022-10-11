@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:10:42 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 14:31:03 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:43:44 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_infos(char **argv, t_infos *infos)
 {
 	t_mutex	*print;
-	t_mutex *end;
+	t_mutex	*end;
 
 	infos->n_of_philos = ft_atoi(argv[0]);
 	infos->time_to_die = ft_atoi(argv[1]);
@@ -49,7 +49,7 @@ void	init_crew(t_infos *infos, t_mutex **pills, t_philos **neb_crew)
 	int	i;
 
 	*neb_crew = (t_philos *)malloc(sizeof(t_philos) * infos->n_of_philos);
-	i = -1;	
+	i = -1;
 	while (++i < infos->n_of_philos)
 	{
 		(*neb_crew)[i].id = i + 1;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 11:51:32 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 11:51:40 by ralves-b         ###   ########.fr       */
+/*   Created: 2022/10/11 15:44:04 by ralves-b          #+#    #+#             */
+/*   Updated: 2022/10/11 15:44:13 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_atoi(const char *n)
 {
 	int	result;
-	int		i;
+	int	i;
 
 	result = 0;
 	i = 0;
