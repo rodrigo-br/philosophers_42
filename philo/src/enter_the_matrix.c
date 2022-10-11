@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 19:44:40 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:50:07 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ignorance_is_a_bliss(t_infos *infos)
 	int	end;
 
 	pthread_mutex_lock(infos->lock_end);
-	end = 1;	
+	end = 1;
 	if (infos->end || infos->n_of_philos == 1)
 	{
 		end = 0;
