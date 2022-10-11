@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 14:39:49 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:38:35 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
-
-# define VERY_LARGE_N	999999999999999999
-# define TRUE 1
-# define FALSE 0
-# define PILLS_TAKEN 1
-# define EAT 2
-# define SLEEP 3
-# define THINK 4
-# define EXCHANGE_YOUR_FRIENDS_FOR_A_HAMBURGUER (void *)0
+# include <please_dont_open_me.h>
 
 typedef unsigned long long int	t_ulli;
 typedef pthread_mutex_t			t_mutex;
@@ -58,10 +50,10 @@ typedef struct s_philos
 int		check_args(int argc, char **argv);
 int		ft_atoi(const char *n);
 t_ul	time_now(void);
-void	architect_do_your_thing(char **argv, t_infos *infos, t_mutex **pills, \
-	t_philos **neb_crew);
 void	pick_up_the_phone(t_philos *neb_new, t_infos *infos);
 void	knock_knock_neo(t_philos *philos, int action);
 int		ignorance_is_a_bliss(t_infos *infos);
+void	architect_do_your_thing(char **argv, t_infos *infos, t_mutex **pills, \
+	t_philos **neb_crew);
 
 #endif

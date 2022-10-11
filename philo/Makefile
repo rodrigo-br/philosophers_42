@@ -8,8 +8,8 @@ SRCS	=	$(MAIN)
 MAIN	=	main.c check_args.c architect.c ft_atoi.c time_now.c \
 			enter_the_matrix.c print.c
 
-VPATH	=	src src/teste
-HEADER	=	philosophers.h
+VPATH	=	src
+HEADER	=	philosophers.h please_dont_open_me.h
 INCLUDE	=	-I ./
 
 all: $(NAME)

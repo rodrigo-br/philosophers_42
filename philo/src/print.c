@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:24:54 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 14:39:06 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:32:43 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@ void	knock_knock_neo(t_philos *philos, int action)
 		printf("%d %ld is sleeping\n", philos->id, time_now() - philos->infos->start);
 	else if (action == THINK && ignorance_is_a_bliss(philos->infos))
 		printf("%d %ld is thinking\n", philos->id, time_now() - philos->infos->start);
+	else if (action == PLOT_TWIST)
+		printf("%d %ld is dead\n", philos->id, time_now() - philos->infos->start);
 	pthread_mutex_unlock(philos->infos->lock_print);
 }
