@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 14:13:49 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:39:49 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_infos
 {
 	t_ul		start;
 	t_mutex		*lock_print;
+	t_mutex		*lock_end;
 	int			n_of_philos;
 	int			time_to_die;
 	int			time_to_eat;
@@ -60,6 +61,7 @@ t_ul	time_now(void);
 void	architect_do_your_thing(char **argv, t_infos *infos, t_mutex **pills, \
 	t_philos **neb_crew);
 void	pick_up_the_phone(t_philos *neb_new, t_infos *infos);
-void	print(t_philos *philos, int action);
+void	knock_knock_neo(t_philos *philos, int action);
+int		ignorance_is_a_bliss(t_infos *infos);
 
 #endif

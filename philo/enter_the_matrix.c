@@ -6,29 +6,41 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 14:14:11 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:37:26 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
+
+int	ignorance_is_a_bliss(t_infos *infos)
+{
+	pthread_mutex_lock(infos->lock_end);
+	if (infos->dead)
+	{
+		pthread_mutex_unlock(infos->lock_end);
+		return (0);
+	}
+	pthread_mutex_unlock(infos->lock_end);
+	return (1);
+}
 
 void	choose_the_pills(t_philos *philos)
 {
 	if (!(philos->id % 2))
 	{
 		pthread_mutex_lock(philos->blue);
-		print(philos, PILLS_TAKEN);
+		knock_knock_neo(philos, PILLS_TAKEN);
 		pthread_mutex_lock(philos->red);
-		print(philos, PILLS_TAKEN);
+		knock_knock_neo(philos, PILLS_TAKEN);
 	}
 	else
 	{
 		pthread_mutex_lock(philos->red);
-		print(philos, PILLS_TAKEN);
+		knock_knock_neo(philos, PILLS_TAKEN);
 		pthread_mutex_lock(philos->blue);
-		print(philos, PILLS_TAKEN);
+		knock_knock_neo(philos, PILLS_TAKEN);
 	}
-	print(philos, EAT);
+	knock_knock_neo(philos, EAT);
 	philos->starving = time_now() - philos->infos->start;
 	usleep(philos->infos->time_to_eat * 1000);
 	pthread_mutex_unlock(philos->blue);
@@ -44,16 +56,16 @@ void	*crew_do_your_thing(void *_philos)
 	philos = (t_philos *)_philos;
 	if (!(philos->id % 2))
 		usleep(10);
-	while (TRUE)
+	while (ignorance_is_a_bliss(philos->infos))
 	{
 		choose_the_pills(philos);
 		if (!philos->meals)
 			return (EXCHANGE_YOUR_FRIENDS_FOR_A_HAMBURGUER);
-		print(philos, SLEEP);
+		knock_knock_neo(philos, SLEEP);
 		usleep(philos->infos->time_to_sleep * 1000);
-		print(philos, THINK);
+		knock_knock_neo(philos, THINK);
 	}
-	return (NULL);
+	return (EXCHANGE_YOUR_FRIENDS_FOR_A_HAMBURGUER);
 }
 
 void	pick_up_the_phone(t_philos *neb_crew, t_infos *infos)
