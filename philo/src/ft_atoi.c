@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 12:11:34 by ralves-b         ###   ########.fr       */
+/*   Created: 2022/10/11 11:51:32 by ralves-b          #+#    #+#             */
+/*   Updated: 2022/10/11 11:51:40 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-int	main(int argc, char **argv)
+int	ft_atoi(const char *n)
 {
-	t_infos		infos;
-	t_mutex		*pills;
-	t_philos	*Nebuchadnezzar_crew;
+	int	result;
+	int		i;
 
-	if (check_args(argc, ++argv))
-		return (EXIT_FAILURE);
-	architect_do_your_thing(argv, &infos, &pills, &Nebuchadnezzar_crew);
-	return (EXIT_SUCCESS);
+	result = 0;
+	i = 0;
+	while (n[i] <= '9' && n[i] >= '0')
+		result = result * 10 + (n[i++] - '0');
+	return (result);
 }

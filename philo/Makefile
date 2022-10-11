@@ -5,7 +5,7 @@ OBJ_DIR	=	obj
 OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 SRCS	=	$(MAIN)
-MAIN	=	main.c check_args.c architect.c
+MAIN	=	main.c check_args.c architect.c ft_atoi.c
 
 VPATH	=	src src/teste
 HEADER	=	philosophers.h

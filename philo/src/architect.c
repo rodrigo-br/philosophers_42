@@ -6,23 +6,11 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:10:42 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 11:46:39 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:12:44 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
-
-static int	ft_atoi(const char *n)
-{
-	int	result;
-	int		i;
-
-	result = 0;
-	i = 0;
-	while (n[i] <= '9' && n[i] >= '0')
-		result = result * 10 + (n[i++] - '0');
-	return (result);
-}
 
 void	init_infos(char **argv, t_infos *infos)
 {
@@ -40,4 +28,21 @@ void	init_infos(char **argv, t_infos *infos)
 	print = (t_mutex *)malloc(sizeof(t_mutex));
 	infos->lock_print = print;
 	pthread_mutex_init(infos->lock_print, NULL);
+}
+
+void	init_pills(t_mutex **pills, int n_of_philos)
+{
+	int	i;
+
+	i = -1;
+	*pills = (t_mutex *)malloc(sizeof(t_mutex) * n_of_philos);
+	while (++i < n_of_philos)
+		pthread_mutex_init(&((*pills)[i]), NULL);
+}
+
+void	architect_do_your_thing(char **argv, t_infos *infos, t_mutex **pills, \
+	t_philos **neb_crew)
+{
+	init_infos(argv, infos);
+	init_pills(pills, infos->n_of_philos);
 }
