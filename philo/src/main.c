@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 12:41:01 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:15:27 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	architect_do_your_thing(argv, &infos, &pills, &nebuchadnezzar_crew);
 	pick_up_the_phone(nebuchadnezzar_crew, &infos);
+	free(pills);
 	return (EXIT_SUCCESS);
 }

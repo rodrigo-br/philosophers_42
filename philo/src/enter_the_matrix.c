@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 15:43:12 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:33:56 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,18 @@ void	*do_the_oracle_thing(void *_neb_crew)
 	infos = (*neb_crew)->infos;
 	while (infos->must_eat)
 	{
-		if (time_now() - infos->start - (*neb_crew)[i].starving
-			> (t_ul)infos->time_to_die)
+		if ((time_now() - infos->start - (*neb_crew)[i].starving
+			> (t_ul)infos->time_to_die))
 		{
-			pthread_mutex_lock(infos->lock_end);
-			infos->dead = TRUE;
-			pthread_mutex_unlock(infos->lock_end);
-			knock_knock_neo(&(*neb_crew)[i], PLOT_TWIST);
-			return (OH_NO_NEO_COULDN_T_ESCAPE_THE_BULLETS);
+			if ((*neb_crew)[i].meals != 0)
+			{
+				pthread_mutex_lock(infos->lock_end);
+				infos->dead = TRUE;
+				pthread_mutex_unlock(infos->lock_end);
+				knock_knock_neo(&(*neb_crew)[i], PLOT_TWIST);
+				usleep(666);
+				return (OH_NO_NEO_COULDN_T_ESCAPE_THE_BULLETS);
+			}
 		}
 		i = (i + 1) % infos->n_of_philos;
 	}
@@ -40,7 +44,7 @@ void	*do_the_oracle_thing(void *_neb_crew)
 int	ignorance_is_a_bliss(t_infos *infos)
 {
 	pthread_mutex_lock(infos->lock_end);
-	if (infos->dead)
+	if (infos->dead || infos->n_of_philos == 1)
 	{
 		pthread_mutex_unlock(infos->lock_end);
 		return (0);
@@ -91,6 +95,7 @@ void	*crew_do_your_thing(void *_neb_crew)
 		knock_knock_neo(neb_crew, SLEEP);
 		usleep(neb_crew->infos->time_to_sleep * 1000);
 		knock_knock_neo(neb_crew, THINK);
+		usleep(100);
 	}
 	return (EXCHANGE_YOUR_FRIENDS_FOR_A_HAMBURGUER);
 }
@@ -100,17 +105,29 @@ void	pick_up_the_phone(t_philos *neb_crew, t_infos *infos)
 	pthread_t	*crew;
 	pthread_t	*the_oracle;
 	int			i;
+	int			n;
 
-	crew = (pthread_t *)malloc(sizeof(pthread_t) * infos->n_of_philos);
+	n = infos->n_of_philos;
+	crew = (pthread_t *)malloc(sizeof(pthread_t) * n);
 	the_oracle = (pthread_t *)malloc(sizeof(pthread_t));
-	infos->must_eat = infos->n_of_philos;
+	infos->must_eat = n;
 	infos->start = time_now();
 	i = -1;
-	while (++i < infos->n_of_philos)
+	while (++i < n)
 		pthread_create(&crew[i], NULL, &crew_do_your_thing, &neb_crew[i]);
 	pthread_create(the_oracle, NULL, &do_the_oracle_thing, &neb_crew);
 	i = -1;
-	while (++i < infos->n_of_philos)
+	while (++i < n)
 		pthread_join(crew[i], NULL);
 	pthread_join(*the_oracle, NULL);
+	i = -1;
+	while (++i < n)
+		pthread_mutex_destroy(neb_crew[i].blue);
+	pthread_mutex_destroy(infos->lock_print);
+	pthread_mutex_destroy(infos->lock_end);
+	free(infos->lock_print);
+	free(infos->lock_end);
+	free(crew);
+	free(the_oracle);
+	free(neb_crew);
 }
