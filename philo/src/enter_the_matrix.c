@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 16:33:56 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 23:47:56 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,17 @@ void	*do_the_oracle_thing(void *_neb_crew)
 	infos = (*neb_crew)->infos;
 	while (infos->must_eat)
 	{
-		if ((time_now() - infos->start - (*neb_crew)[i].starving
-			> (t_ul)infos->time_to_die))
+		if ((*neb_crew)[i].meals == 0)
+			continue ;
+		else if ((time_now() - infos->start) - (*neb_crew)[i].starving
+			> (t_ul)infos->time_to_die)
 		{
-			if ((*neb_crew)[i].meals != 0)
-			{
-				pthread_mutex_lock(infos->lock_end);
-				infos->dead = TRUE;
-				pthread_mutex_unlock(infos->lock_end);
-				knock_knock_neo(&(*neb_crew)[i], PLOT_TWIST);
-				usleep(666);
-				return (OH_NO_NEO_COULDN_T_ESCAPE_THE_BULLETS);
-			}
+			pthread_mutex_lock(infos->lock_end);
+			infos->dead = TRUE;
+			pthread_mutex_unlock(infos->lock_end);
+			knock_knock_neo(&(*neb_crew)[i], PLOT_TWIST);
+			usleep(666);
+			return (OH_NO_NEO_COULDN_T_ESCAPE_THE_BULLETS);
 		}
 		i = (i + 1) % infos->n_of_philos;
 	}
@@ -70,11 +69,10 @@ void	choose_the_pills(t_philos *neb_crew)
 		knock_knock_neo(neb_crew, PILLS_TAKEN);
 	}
 	knock_knock_neo(neb_crew, EAT);
-	neb_crew->starving = time_now() - neb_crew->infos->start;
+	neb_crew->meals--;
 	usleep(neb_crew->infos->time_to_eat * 1000);
 	pthread_mutex_unlock(neb_crew->blue);
 	pthread_mutex_unlock(neb_crew->red);
-	neb_crew->meals--;
 }
 
 void	*crew_do_your_thing(void *_neb_crew)
@@ -120,14 +118,5 @@ void	pick_up_the_phone(t_philos *neb_crew, t_infos *infos)
 	while (++i < n)
 		pthread_join(crew[i], NULL);
 	pthread_join(*the_oracle, NULL);
-	i = -1;
-	while (++i < n)
-		pthread_mutex_destroy(neb_crew[i].blue);
-	pthread_mutex_destroy(infos->lock_print);
-	pthread_mutex_destroy(infos->lock_end);
-	free(infos->lock_print);
-	free(infos->lock_end);
-	free(crew);
-	free(the_oracle);
-	free(neb_crew);
+	the_end(neb_crew, infos, crew, the_oracle);
 }

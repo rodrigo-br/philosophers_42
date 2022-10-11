@@ -6,11 +6,28 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 16:15:27 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:46:32 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
+
+void	the_end(t_philos *neb_crew, t_infos *infos, \
+	pthread_t *crew, pthread_t *the_oracle)
+{
+	int	i;
+
+	i = -1;
+	while (++i < infos->n_of_philos)
+		pthread_mutex_destroy(neb_crew[i].blue);
+	pthread_mutex_destroy(infos->lock_print);
+	pthread_mutex_destroy(infos->lock_end);
+	free(infos->lock_print);
+	free(infos->lock_end);
+	free(crew);
+	free(the_oracle);
+	free(neb_crew);
+}
 
 int	main(int argc, char **argv)
 {
