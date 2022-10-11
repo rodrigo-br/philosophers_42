@@ -5,7 +5,8 @@ OBJ_DIR	=	obj
 OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 SRCS	=	$(MAIN)
-MAIN	=	main.c check_args.c architect.c ft_atoi.c time_now.c
+MAIN	=	main.c check_args.c architect.c ft_atoi.c time_now.c \
+			enter_the_matrix.c print.c
 
 VPATH	=	src src/teste
 HEADER	=	philosophers.h

@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 12:12:19 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:13:49 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 # define VERY_LARGE_N	999999999999999999
 # define TRUE 1
 # define FALSE 0
+# define PILLS_TAKEN 1
+# define EAT 2
+# define SLEEP 3
+# define THINK 4
+# define EXCHANGE_YOUR_FRIENDS_FOR_A_HAMBURGUER (void *)0
 
 typedef unsigned long long int	t_ulli;
 typedef pthread_mutex_t			t_mutex;
@@ -54,5 +59,7 @@ int		ft_atoi(const char *n);
 t_ul	time_now(void);
 void	architect_do_your_thing(char **argv, t_infos *infos, t_mutex **pills, \
 	t_philos **neb_crew);
+void	pick_up_the_phone(t_philos *neb_new, t_infos *infos);
+void	print(t_philos *philos, int action);
 
 #endif
