@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:37:33 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 18:39:38 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:45:32 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # define SLEEP 3
 # define THINK 4
 # define PLOT_TWIST 5
-# define VERY_LARGE_N	999999999999999999
+# define VERY_LARGE_N 999999999999999999
+# define MAX_INT 2147483647
 # define SAVE_THE_DAY (void *)0
 # define MR_SMITH_WIN (void *)0
 # define NEO_SAVED_THE_DAY_YAAAAAY (void *)0
