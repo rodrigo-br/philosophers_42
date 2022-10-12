@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:10:42 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 19:29:31 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:32:45 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	init_infos(char **argv, t_infos *infos)
 	infos->time_to_die = ft_atoi(argv[1]);
 	infos->time_to_eat = ft_atoi(argv[2]);
 	infos->time_to_sleep = ft_atoi(argv[3]);
-	infos->dead = 0;
 	infos->end = 0;
 	infos->must_eat = -1;
 	infos->start = 0;
@@ -42,7 +41,9 @@ void	init_pills(t_mutex **pills, int n_of_philos)
 	*pills = (t_mutex *)malloc(sizeof(t_mutex) * n_of_philos);
 	i = -1;
 	while (++i < n_of_philos)
+	{
 		pthread_mutex_init(&((*pills)[i]), NULL);
+	}
 }
 
 void	init_crew(t_infos *infos, t_mutex **pills, t_philos **neb_crew)
@@ -59,6 +60,10 @@ void	init_crew(t_infos *infos, t_mutex **pills, t_philos **neb_crew)
 		(*neb_crew)[i].meals = infos->must_eat;
 		(*neb_crew)[i].infos = infos;
 		(*neb_crew)[i].starving = 0;
+		(*neb_crew)[i].lock_starving = (t_mutex *)malloc(sizeof(t_mutex));
+		pthread_mutex_init((*neb_crew)[i].lock_starving, NULL);
+		(*neb_crew)[i].lock_meals = (t_mutex *)malloc(sizeof(t_mutex));
+		pthread_mutex_init((*neb_crew)[i].lock_meals, NULL);
 	}
 }
 

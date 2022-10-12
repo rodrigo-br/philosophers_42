@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 19:50:07 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:42:43 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,63 +14,65 @@
 
 int	ignorance_is_a_bliss(t_infos *infos)
 {
-	int	end;
+	int	ignorance;
 
 	pthread_mutex_lock(infos->lock_end);
-	end = 1;
-	if (infos->end || infos->n_of_philos == 1)
+	ignorance = TRUE;
+	if (infos->end)
 	{
-		end = 0;
+		ignorance = FALSE;
 	}
 	pthread_mutex_unlock(infos->lock_end);
-	return (end);
+	return (ignorance);
 }
 
 void	choose_the_pills(t_philos *neb_crew)
 {
-	if (!(neb_crew->id % 2))
+	pthread_mutex_lock(neb_crew->blue);
+	pthread_mutex_lock(neb_crew->red);
+	if (!ignorance_is_a_bliss(neb_crew->infos))
 	{
-		pthread_mutex_lock(neb_crew->blue);
-		knock_knock_neo(neb_crew, PILLS_TAKEN);
-		pthread_mutex_lock(neb_crew->red);
-		knock_knock_neo(neb_crew, PILLS_TAKEN);
+		pthread_mutex_unlock(neb_crew->blue);
+		pthread_mutex_unlock(neb_crew->red);
+		return ;
 	}
-	else
-	{
-		pthread_mutex_lock(neb_crew->red);
-		knock_knock_neo(neb_crew, PILLS_TAKEN);
-		pthread_mutex_lock(neb_crew->blue);
-		knock_knock_neo(neb_crew, PILLS_TAKEN);
-	}
+	knock_knock_neo(neb_crew, PILLS_TAKEN);
+	knock_knock_neo(neb_crew, PILLS_TAKEN);
 	knock_knock_neo(neb_crew, EAT);
-	usleep(neb_crew->infos->time_to_eat * 1000);
+	pthread_mutex_lock(neb_crew->lock_starving);
+	neb_crew->starving = time_now() - neb_crew->infos->start;
+	pthread_mutex_unlock(neb_crew->lock_starving);
+	usleep((neb_crew->infos->time_to_eat * 1000));
 	pthread_mutex_unlock(neb_crew->blue);
 	pthread_mutex_unlock(neb_crew->red);
+	pthread_mutex_lock(neb_crew->lock_meals);
+	neb_crew->meals--;
 }
 
 void	*do_the_oracle_thing(void *_neb_crew)
 {
-	t_philos	**neb_crew;
+	t_philos	*neb_crew;
 	t_infos		*infos;
+	t_ul		now;
 	int			i;
 
 	i = 0;
-	neb_crew = (t_philos **)_neb_crew;
-	infos = (*neb_crew)->infos;
+	neb_crew = (t_philos *)_neb_crew;
+	infos = neb_crew->infos;
 	while (infos->must_eat)
 	{
-		if ((*neb_crew)[i].meals == 0)
-			continue ;
-		else if ((time_now() - infos->start) - (*neb_crew)[i].starving
-			> (t_ul)infos->time_to_die)
+		now = time_now() - infos->start;
+		pthread_mutex_lock(neb_crew->lock_starving);
+		if (now - neb_crew[i].starving > (t_ul)infos->time_to_die)
 		{
+			pthread_mutex_unlock(neb_crew->lock_starving);
 			pthread_mutex_lock(infos->lock_end);
-			infos->dead = TRUE;
+			infos->end = TRUE;
 			pthread_mutex_unlock(infos->lock_end);
-			knock_knock_neo(&(*neb_crew)[i], PLOT_TWIST);
-			usleep(666);
-			return (OH_NO_NEO_COULDN_T_ESCAPE_THE_BULLETS);
+			return (knock_knock_neo(&neb_crew[i], PLOT_TWIST), MR_SMITH_WIN);
 		}
+		pthread_mutex_unlock(neb_crew->lock_starving);
+		usleep(5);
 		i = (i + 1) % infos->n_of_philos;
 	}
 	return (NEO_SAVED_THE_DAY_YAAAAAY);
@@ -82,21 +84,27 @@ void	*crew_do_your_thing(void *_neb_crew)
 
 	neb_crew = (t_philos *)_neb_crew;
 	if (neb_crew->id % 2)
-		usleep(50);
+		usleep(69);
+	if (neb_crew->infos->n_of_philos == 1)
+	{
+		knock_knock_neo(neb_crew, PILLS_TAKEN);
+		return (usleep(neb_crew->infos->time_to_die * 1000), WRONG_PILL);
+	}
 	while (ignorance_is_a_bliss(neb_crew->infos))
 	{
 		choose_the_pills(neb_crew);
-		if (!neb_crew->meals)
+		if (!(neb_crew->meals))
 		{
 			neb_crew->infos->must_eat--;
-			return (EXCHANGE_YOUR_FRIENDS_FOR_A_HAMBURGUER);
+			return (pthread_mutex_unlock(neb_crew->lock_meals), SAVE_THE_DAY);
 		}
+		pthread_mutex_unlock(neb_crew->lock_meals);
 		knock_knock_neo(neb_crew, SLEEP);
 		usleep(neb_crew->infos->time_to_sleep * 1000);
 		knock_knock_neo(neb_crew, THINK);
-		usleep(50);
+		usleep(500);
 	}
-	return (EXCHANGE_YOUR_FRIENDS_FOR_A_HAMBURGUER);
+	return (SAVE_THE_DAY);
 }
 
 void	pick_up_the_phone(t_philos *neb_crew, t_infos *infos)
@@ -114,7 +122,7 @@ void	pick_up_the_phone(t_philos *neb_crew, t_infos *infos)
 	i = -1;
 	while (++i < n)
 		pthread_create(&crew[i], NULL, &crew_do_your_thing, &neb_crew[i]);
-	pthread_create(the_oracle, NULL, &do_the_oracle_thing, &neb_crew);
+	pthread_create(the_oracle, NULL, &do_the_oracle_thing, neb_crew);
 	i = -1;
 	while (++i < n)
 		pthread_join(crew[i], NULL);

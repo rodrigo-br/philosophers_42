@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:24:54 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/11 19:51:38 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:32:22 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,19 @@
 
 void	knock_knock_neo(t_philos *nb, int action)
 {
+	t_ul	now;
+
 	pthread_mutex_lock(nb->infos->lock_print);
+	now = time_now() - nb->infos->start;
 	if (action == PILLS_TAKEN && ignorance_is_a_bliss(nb->infos))
-		printf("%d %ld has taken the fork\n", \
-		nb->id, time_now() - nb->infos->start);
+		printf("%ld %d has taken the fork\n", now, nb->id);
 	else if (action == EAT && ignorance_is_a_bliss(nb->infos))
-	{
-		nb->starving = time_now() - nb->infos->start;
-		nb->meals--;
-		printf("%d %ld is eating\n", nb->id, \
-		time_now() - nb->infos->start);
-	}
+		printf("%ld %d is eating\n", now, nb->id);
 	else if (action == SLEEP && ignorance_is_a_bliss(nb->infos))
-		printf("%d %ld is sleeping\n", nb->id, \
-		time_now() - nb->infos->start);
+		printf("%ld %d is sleeping\n", now, nb->id);
 	else if (action == THINK && ignorance_is_a_bliss(nb->infos))
-		printf("%d %ld is thinking\n", nb->id, \
-		time_now() - nb->infos->start);
+		printf("%ld %d is thinking\n", now, nb->id);
 	else if (action == PLOT_TWIST)
-	{
-		if (nb->meals != 0)
-			printf("%d %ld is dead\n", nb->id, time_now() - nb->infos->start);
-		else
-			nb->infos->dead = FALSE;
-	}
+		printf("%ld %d is dead\n", now, nb->id);
 	pthread_mutex_unlock(nb->infos->lock_print);
 }
