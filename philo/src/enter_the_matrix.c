@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 18:42:43 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:58:57 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	choose_the_pills(t_philos *neb_crew)
 	usleep((neb_crew->infos->time_to_eat * 1000));
 	pthread_mutex_unlock(neb_crew->blue);
 	pthread_mutex_unlock(neb_crew->red);
-	pthread_mutex_lock(neb_crew->lock_meals);
-	neb_crew->meals--;
 }
 
 void	*do_the_oracle_thing(void *_neb_crew)
@@ -62,16 +60,13 @@ void	*do_the_oracle_thing(void *_neb_crew)
 	while (infos->must_eat)
 	{
 		now = time_now() - infos->start;
-		pthread_mutex_lock(neb_crew->lock_starving);
-		if (now - neb_crew[i].starving > (t_ul)infos->time_to_die)
+		if (now - lock_this(&neb_crew[i]) > (t_ul)infos->time_to_die)
 		{
-			pthread_mutex_unlock(neb_crew->lock_starving);
 			pthread_mutex_lock(infos->lock_end);
 			infos->end = TRUE;
 			pthread_mutex_unlock(infos->lock_end);
 			return (knock_knock_neo(&neb_crew[i], PLOT_TWIST), MR_SMITH_WIN);
 		}
-		pthread_mutex_unlock(neb_crew->lock_starving);
 		usleep(5);
 		i = (i + 1) % infos->n_of_philos;
 	}
@@ -93,12 +88,8 @@ void	*crew_do_your_thing(void *_neb_crew)
 	while (ignorance_is_a_bliss(neb_crew->infos))
 	{
 		choose_the_pills(neb_crew);
-		if (!(neb_crew->meals))
-		{
-			neb_crew->infos->must_eat--;
-			return (pthread_mutex_unlock(neb_crew->lock_meals), SAVE_THE_DAY);
-		}
-		pthread_mutex_unlock(neb_crew->lock_meals);
+		if (idk_a_good_name(neb_crew))
+			return (SAVE_THE_DAY);
 		knock_knock_neo(neb_crew, SLEEP);
 		usleep(neb_crew->infos->time_to_sleep * 1000);
 		knock_knock_neo(neb_crew, THINK);

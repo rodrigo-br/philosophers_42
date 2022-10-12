@@ -6,7 +6,7 @@ OBJS	=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 SRCS	=	$(MAIN)
 MAIN	=	main.c check_args.c architect.c ft_atoi.c time_now.c \
-			enter_the_matrix.c knock_knock_neo.c
+			enter_the_matrix.c knock_knock_neo.c very_important_file.c
 
 VPATH	=	src
 HEADER	=	philosophers.h please_dont_open_me.h

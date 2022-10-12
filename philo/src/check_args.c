@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 17:07:35 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 18:48:40 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:54:30 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	is_all_num(char **argv)
 	return (1);
 }
 
-int	check_args(int argc, char **argv)
+short int	check_args(int argc, char **argv)
 {
 	if ((argc != 5 && argc != 6) || !is_all_num(argv) || !ft_atolli(argv[0])
 		|| !ft_atolli(argv[3]) || !ft_atolli(argv[2]) || !ft_atolli(argv[1])

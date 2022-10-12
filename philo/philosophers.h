@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 17:26:56 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:56:27 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,17 @@ typedef struct s_philos
 	t_infos		*infos;
 }	t_philos;
 
-t_ul	time_now(void);
-int		ft_atoi(const char *n);
-int		check_args(int argc, char **argv);
-int		ignorance_is_a_bliss(t_infos *infos);
-void	knock_knock_neo(t_philos *philos, int action);
-void	pick_up_the_phone(t_philos *neb_new, t_infos *infos);
-void	architect_do_your_thing(char **argv, t_infos *infos, t_mutex **pills, \
-	t_philos **neb_crew);
-void	the_end(t_philos *neb_crew, t_infos *infos, \
+t_ul		time_now(void);
+int			ft_atoi(const char *n);
+short int	check_args(int argc, char **argv);
+int			ignorance_is_a_bliss(t_infos *infos);
+void		knock_knock_neo(t_philos *philos, int action);
+void		pick_up_the_phone(t_philos *neb_new, t_infos *infos);
+void		architect_do_your_thing(char **argv, t_infos *infos, \
+	t_mutex **pills, t_philos **neb_crew);
+void		the_end(t_philos *neb_crew, t_infos *infos, \
 	pthread_t *crew, pthread_t *the_oracle);
+short int	lock_this(t_philos	*neb_crew);
+short int	idk_a_good_name(t_philos *neb_crew);
 
 #endif
