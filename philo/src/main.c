@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:28:11 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 18:19:02 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:18:31 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,13 @@ void	the_end(t_philos *neb_crew, t_infos *infos, \
 
 	i = -1;
 	while (++i < infos->n_of_philos)
+	{
 		pthread_mutex_destroy(neb_crew[i].blue);
+		pthread_mutex_destroy(neb_crew[i].lock_starving);
+		free(neb_crew[i].lock_starving);
+		pthread_mutex_destroy(neb_crew[i].lock_meals);
+		free(neb_crew[i].lock_meals);
+	}
 	pthread_mutex_destroy(infos->lock_print);
 	pthread_mutex_destroy(infos->lock_end);
 	free(infos->lock_print);
