@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:18:51 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 16:56:27 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:02:21 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		architect_do_your_thing(char **argv, t_infos *infos, \
 	t_mutex **pills, t_philos **neb_crew);
 void		the_end(t_philos *neb_crew, t_infos *infos, \
 	pthread_t *crew, pthread_t *the_oracle);
-short int	lock_this(t_philos	*neb_crew);
+t_ul		lock_this(t_philos	*neb_crew);
 short int	idk_a_good_name(t_philos *neb_crew);
 
 #endif

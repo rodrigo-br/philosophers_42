@@ -6,15 +6,15 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:47:19 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 16:53:56 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:03:25 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philosophers.h>
 
-short int	lock_this(t_philos	*neb_crew)
+t_ul	lock_this(t_philos	*neb_crew)
 {
-	int	miaw;
+	t_ul	miaw;
 
 	pthread_mutex_lock(neb_crew->lock_starving);
 	miaw = neb_crew->starving;
@@ -29,7 +29,8 @@ short int	idk_a_good_name(t_philos *neb_crew)
 	if (!(neb_crew->meals))
 	{
 		neb_crew->infos->must_eat--;
-		return (pthread_mutex_unlock(neb_crew->lock_meals), TRUE);
+		pthread_mutex_unlock(neb_crew->lock_meals);
+		return (TRUE);
 	}
 	pthread_mutex_unlock(neb_crew->lock_meals);
 	return (FALSE);
