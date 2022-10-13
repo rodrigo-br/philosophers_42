@@ -38,4 +38,4 @@ git:
 	git commit -m "$(m)"
 	git push
 
-.PHONY:	all clean fclean re
+.PHONY:	all clean fclean re git

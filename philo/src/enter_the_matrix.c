@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:37:20 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 16:58:57 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:00:17 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	*crew_do_your_thing(void *_neb_crew)
 	while (ignorance_is_a_bliss(neb_crew->infos))
 	{
 		choose_the_pills(neb_crew);
-		if (idk_a_good_name(neb_crew))
+		if (handle_meals(neb_crew))
 			return (SAVE_THE_DAY);
 		knock_knock_neo(neb_crew, SLEEP);
 		usleep(neb_crew->infos->time_to_sleep * 1000);

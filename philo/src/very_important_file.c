@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:47:19 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/10/12 17:03:25 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:55:55 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 t_ul	lock_this(t_philos	*neb_crew)
 {
-	t_ul	miaw;
+	t_ul	starving;
 
 	pthread_mutex_lock(neb_crew->lock_starving);
-	miaw = neb_crew->starving;
+	starving = neb_crew->starving;
 	pthread_mutex_unlock(neb_crew->lock_starving);
-	return (miaw);
+	return (starving);
 }
 
-short int	idk_a_good_name(t_philos *neb_crew)
+short int	handle_meals(t_philos *neb_crew)
 {
 	pthread_mutex_lock(neb_crew->lock_meals);
 	neb_crew->meals--;
