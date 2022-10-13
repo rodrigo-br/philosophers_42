@@ -33,4 +33,9 @@ $(OBJ_DIR)/%.o: %.c $(HEADER)
 $(OBJ_DIR):
 	mkdir -p $@
 
+git:
+	git add .
+	git commit -m "$(m)"
+	git push
+
 .PHONY:	all clean fclean re
