@@ -14,8 +14,6 @@ INCLUDE	=	-I ./
 
 all: $(NAME)
 
-bonus: $(NAME_BONUS)
-
 clean:
 	rm -rf obj
 
